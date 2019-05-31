@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Button, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
-import ExampleActions from 'App/Stores/Example/Actions'
+import LoginActions from 'App/Stores/Login/Actions'
 import { liveInEurope } from 'App/Stores/Example/Selectors'
 import Style from './LoginScreenStyle'
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -17,7 +17,7 @@ import { Input } from 'react-native-elements'
 
 class LoginScreen extends React.Component {
   componentDidMount() {
-    this.props.fetchUser()
+    this.props.login()
   }
 
   render() {
@@ -39,7 +39,7 @@ class LoginScreen extends React.Component {
               inputContainerStyle={Style.inputContainer}
               leftIcon={<Icon name="lock" size={24} color="black" />}
             />
-            <Button onPress={this.props.fetchUser} title="Refresh" />
+            <Button onPress={this.props.login} title="Login" />
           </View>
         )}
       </View>
@@ -51,19 +51,19 @@ LoginScreen.propTypes = {
   user: PropTypes.object,
   userIsLoading: PropTypes.bool,
   userErrorMessage: PropTypes.string,
-  fetchUser: PropTypes.func,
+  login: PropTypes.func,
   liveInEurope: PropTypes.bool,
 }
 
 const mapStateToProps = (state) => ({
-  user: state.example.user,
-  userIsLoading: state.example.userIsLoading,
-  userErrorMessage: state.example.userErrorMessage,
+  user: state.login.user,
+  userIsLoading: state.login.userIsLoading,
+  userErrorMessage: state.login.userErrorMessage,
   liveInEurope: liveInEurope(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchUser: () => dispatch(ExampleActions.fetchUser()),
+  login: () => dispatch(LoginActions.login()),
 })
 
 export default connect(
