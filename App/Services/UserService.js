@@ -38,10 +38,10 @@ function fetchUser() {
   })
 }
 
-function login() {
+function login(credentials) {
   const formData = new FormData()
-  formData.append('username', 'hustle')
-  formData.append('password', 'wayfarerapi')
+  formData.append('username', credentials.credentials.username)
+  formData.append('password', credentials.credentials.password)
   return userApiClient.post('rest-auth/login/', formData).then((response) => {
     if (response.ok) {
       console.info('UserService->login', response.data)

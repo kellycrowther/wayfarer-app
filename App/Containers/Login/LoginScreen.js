@@ -6,7 +6,7 @@ import LoginActions from 'App/Stores/Login/Actions'
 import { liveInEurope } from 'App/Stores/Example/Selectors'
 import Style from './LoginScreenStyle'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import { Input } from 'react-native-elements'
+import { TextInput } from 'react-native-gesture-handler'
 
 /**
  * This is an example of a container component.
@@ -16,8 +16,29 @@ import { Input } from 'react-native-elements'
  */
 
 class LoginScreen extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      username: '',
+      password: '',
+    }
+  }
   componentDidMount() {
     this.props.login()
+  }
+
+  setPassword(password) {
+    password = password.toLowerCase()
+    this.setState({ password: password })
+  }
+
+  setUserName(username) {
+    username = username.toLowerCase()
+    this.setState({ username: username })
+  }
+
+  handleSubmit() {
+    this.props.login(this.state)
   }
 
   render() {
@@ -27,19 +48,24 @@ class LoginScreen extends React.Component {
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <View>
-            <Input
+            <TextInput
+              autoCapitalize="none"
+              onChangeText={(text) => this.setUserName(text)}
               placeholder="Username"
               inputStyle={Style.textInput}
               inputContainerStyle={Style.inputContainer}
               leftIcon={<Icon name="user" size={24} color="black" />}
             />
-            <Input
+            <TextInput
+              autoCapitalize="none"
+              secureTextEntry
+              onChangeText={(text) => this.setPassword(text)}
               placeholder="Password"
               inputStyle={Style.textInput}
               inputContainerStyle={Style.inputContainer}
               leftIcon={<Icon name="lock" size={24} color="black" />}
             />
-            <Button onPress={this.props.login} title="Login" />
+            <Button onPress={() => this.handleSubmit()} title="Login" />
           </View>
         )}
       </View>
@@ -63,7 +89,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  login: () => dispatch(LoginActions.login()),
+  login: (credentials) => dispatch(LoginActions.login(credentials)),
 })
 
 export default connect(

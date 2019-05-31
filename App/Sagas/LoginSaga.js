@@ -8,11 +8,11 @@ import { userService } from 'App/Services/UserService'
  * This example saga contains only one to fetch fake user informations.
  * Feel free to remove it.
  */
-export function* login() {
+export function* login(credentials) {
   // Dispatch a redux action using `put()`
   // @see https://redux-saga.js.org/docs/basics/DispatchingActions.html
   yield put(LoginActions.fetchUserLoading())
-  yield call(userService.login)
+  yield call(userService.login, credentials)
 
   // Fetch user informations from an API
   const user = yield call(userService.fetchUser)

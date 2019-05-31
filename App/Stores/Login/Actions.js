@@ -20,7 +20,7 @@ import { createActions } from 'reduxsauce'
  */
 const { Types, Creators } = createActions({
   // Fetch user informations
-  login: null,
+  login: ['credentials'],
   // The operation has started and is loading
   fetchUserLoading: null,
   // User informations were successfully fetched
