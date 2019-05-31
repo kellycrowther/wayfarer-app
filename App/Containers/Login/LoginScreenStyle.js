@@ -16,6 +16,9 @@ export default StyleSheet.create({
     marginBottom: 5,
     textAlign: 'center',
   },
+  inputContainer: {
+    margin: 10,
+  },
   instructions: {
     ...Fonts.style.normal,
     fontStyle: 'italic',
@@ -45,6 +48,9 @@ export default StyleSheet.create({
     ...Fonts.style.normal,
     marginBottom: 5,
     textAlign: 'center',
+  },
+  textInput: {
+    marginLeft: 5,
   },
   title: {
     ...Fonts.style.h2,
