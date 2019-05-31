@@ -3,7 +3,6 @@ import { View, Button, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import LoginActions from 'App/Stores/Login/Actions'
-import { liveInEurope } from 'App/Stores/Example/Selectors'
 import Style from './LoginScreenStyle'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { TextInput } from 'react-native-gesture-handler'
@@ -24,7 +23,7 @@ class LoginScreen extends React.Component {
     }
   }
   componentDidMount() {
-    this.props.login()
+    console.info('LoginScreen->componentDidMount', this.props)
   }
 
   setPassword(password) {
@@ -85,7 +84,6 @@ const mapStateToProps = (state) => ({
   user: state.login.user,
   userIsLoading: state.login.userIsLoading,
   userErrorMessage: state.login.userErrorMessage,
-  liveInEurope: liveInEurope(state),
 })
 
 const mapDispatchToProps = (dispatch) => ({

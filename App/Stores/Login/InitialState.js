@@ -4,7 +4,7 @@
 export const INITIAL_STATE = {
   user: {
     username: '',
-    password: '',
+    token: '',
   },
   userIsLoading: false,
   userErrorMessage: null,

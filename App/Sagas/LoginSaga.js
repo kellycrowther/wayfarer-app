@@ -12,12 +12,15 @@ export function* login(credentials) {
   // Dispatch a redux action using `put()`
   // @see https://redux-saga.js.org/docs/basics/DispatchingActions.html
   yield put(LoginActions.fetchUserLoading())
-  yield call(userService.login, credentials)
 
   // Fetch user informations from an API
-  const user = yield call(userService.fetchUser)
-  if (user) {
-    yield put(LoginActions.fetchUserSuccess(user))
+  const token = yield call(userService.login, credentials)
+  if (token) {
+    const userInformation = {
+      username: credentials.credentials.username,
+      token: token,
+    }
+    yield put(LoginActions.fetchUserSuccess(userInformation))
   } else {
     yield put(LoginActions.fetchUserFailure('There was an error while fetching user informations.'))
   }
