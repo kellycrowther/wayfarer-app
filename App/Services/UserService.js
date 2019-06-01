@@ -19,6 +19,18 @@ const userApiClient = create({
   timeout: 3000,
 })
 
+const wayfarerApiClient = create({
+  /**
+   * Import the config from the App/Config/index.js file
+   */
+  baseURL: Config.API_URL,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+  timeout: 3000,
+})
+
 function fetchUser() {
   // Simulate an error 50% of the time just for testing purposes
   if (Math.random() > 0.5) {
@@ -44,9 +56,25 @@ function login(credentials) {
   // formData.append('password', credentials.credentials.password)
   formData.append('username', 'hustle')
   formData.append('password', 'wayfarerapi')
-  return userApiClient.post('rest-auth/login/', formData).then((response) => {
+  return wayfarerApiClient.post('rest-auth/login/', formData).then((response) => {
     if (response.ok) {
       console.info('UserService->login', response.data)
+      return response.data
+    }
+
+    return null
+  })
+}
+
+function createUser(newUserData) {
+  const formData = new FormData()
+  formData.append('username', newUserData.username)
+  formData.append('password1', newUserData.password)
+  formData.append('password2', newUserData.password)
+  formData.append('email', newUserData.email)
+  return wayfarerApiClient.post('rest-auth/registration/', formData).then((response) => {
+    if (response.ok) {
+      console.info('UserService->createUser', response.data)
       return response.data
     }
 
@@ -57,4 +85,5 @@ function login(credentials) {
 export const userService = {
   fetchUser,
   login,
+  createUser,
 }

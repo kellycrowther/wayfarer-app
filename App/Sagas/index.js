@@ -2,9 +2,11 @@ import { takeLatest, all } from 'redux-saga/effects'
 import { ExampleTypes } from 'App/Stores/Example/Actions'
 import { StartupTypes } from 'App/Stores/Startup/Actions'
 import { LoginTypes } from 'App/Stores/Login/Actions'
+import { RegisterTypes } from 'App/Stores/Register/Actions'
 import { fetchUser } from './ExampleSaga'
 import { startup } from './StartupSaga'
 import { login } from './LoginSaga'
+import { createUser } from './RegisterSaga'
 
 export default function* root() {
   yield all([
@@ -16,5 +18,6 @@ export default function* root() {
     // Call `fetchUser()` when a `FETCH_USER` action is triggered
     takeLatest(ExampleTypes.FETCH_USER, fetchUser),
     takeLatest(LoginTypes.LOGIN, login),
+    takeLatest(RegisterTypes.CREATE_USER, createUser),
   ])
 }

@@ -28,6 +28,16 @@ export const fetchUserFailure = (state, { errorMessage }) => ({
   userErrorMessage: errorMessage,
 })
 
+export const fetchUserLoading = (state, { errorMessage }) => ({
+  ...state,
+  username: '',
+  password: '',
+  email: '',
+  phoneNumber: '',
+  userIsLoading: false,
+  userErrorMessage: errorMessage,
+})
+
 /**
  * @see https://github.com/infinitered/reduxsauce#createreducer
  */

@@ -3,26 +3,24 @@ import { View, Image, Text, Button } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import Style from './RegisterScreenStyle'
-import { createUser, confirmUserSignUp } from '../../Stores/Register/Actions'
+import RegisterActions from '../../Stores/Register/Actions'
 import { TextInput } from 'react-native-gesture-handler'
-
-const initialState = {
-  username: '',
-  password: '',
-  email: '',
-  phone_number: '',
-  authCode: '',
-  auth: {
-    showSignUpConfirmationModal: true,
-    isAuthenticating: false,
-    signUpErrorMessage: 'There was an error trying to sign up.',
-  },
-}
 
 class RegisterScreen extends React.Component {
   constructor() {
     super()
-    this.state = initialState
+    this.state = {
+      username: '',
+      password: '',
+      email: '',
+      phoneNumber: '',
+      authCode: '',
+      auth: {
+        showSignUpConfirmationModal: true,
+        isAuthenticating: false,
+        signUpErrorMessage: 'There was an error trying to sign up.',
+      },
+    }
   }
   componentDidMount() {
     console.info('RegisterScreen->componentDidMount', this.props)
@@ -36,7 +34,9 @@ class RegisterScreen extends React.Component {
 
   signUp() {
     const { username, password, email, phoneNumber } = this.state
-    this.props.dispatchCreateUser(username, password, email, phoneNumber)
+    console.info('SIGN UP: ', username)
+    console.info('password: ', password)
+    this.props.createUser(username, password, email, phoneNumber)
   }
 
   confirm() {
@@ -57,31 +57,35 @@ class RegisterScreen extends React.Component {
             value={this.state.username}
             placeholder="User Name"
             type="username"
-            onChangeText={this.onChangeText}
+            autoCapitalize="none"
+            onChangeText={(text) => this.onChangeText('username', text)}
           />
           <TextInput
             value={this.state.email}
             placeholder="Email"
             type="email"
-            onChangeText={this.onChangeText}
+            autoCapitalize="none"
+            onChangeText={(text) => this.onChangeText('email', text)}
           />
           <TextInput
             value={this.state.password}
             placeholder="Password"
             secureTextEntry
             type="password"
-            onChangeText={this.onChangeText}
+            autoCapitalize="none"
+            onChangeText={(text) => this.onChangeText('password', text)}
           />
           <TextInput
             placeholder="Phone Number"
             type="phone_number"
             keyboardType="numeric"
-            onChangeText={this.onChangeText}
-            value={this.state.phone_number}
+            autoCapitalize="none"
+            onChangeText={(text) => this.onChangeText('phoneNumber', text)}
+            value={this.state.phoneNumber}
           />
           <Button
             title="Sign Up"
-            onPress={this.signUp.bind(this)}
+            onPress={() => this.signUp()}
             isLoading={this.state.auth.isAuthenticating}
           />
         </View>
@@ -92,7 +96,7 @@ class RegisterScreen extends React.Component {
 
 RegisterScreen.propTypes = {
   auth: PropTypes.object,
-  dispatchCreateUser: PropTypes.func,
+  createUser: PropTypes.func,
   dispatchConfirmUser: PropTypes.func,
 }
 
@@ -101,9 +105,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchConfirmUser: (username) => dispatch(confirmUserSignUp(username)),
-  dispatchCreateUser: (username, password, email, phoneNumber) =>
-    dispatch(createUser(username, password, email, phoneNumber)),
+  dispatchConfirmUser: (username) => dispatch(RegisterActions.confirmUserSignUp(username)),
+  createUser: (username, password, email, phoneNumber) =>
+    dispatch(RegisterActions.createUser(username, password, email, phoneNumber)),
 })
 
 export default connect(
