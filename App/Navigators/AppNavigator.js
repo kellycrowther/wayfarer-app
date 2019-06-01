@@ -17,9 +17,9 @@ const StackNavigator = createStackNavigator(
     // The main application screen is our "ExampleScreen". Feel free to replace it with your
     // own screen and remove the example.
     MainScreen: {
-      screen: LoginScreen,
+      screen: ExampleScreen,
       navigationOptions: {
-        title: 'Login',
+        title: 'Example Screen',
         headerStyle: {
           backgroundColor: '#f4511e',
         },
@@ -31,7 +31,7 @@ const StackNavigator = createStackNavigator(
     },
     ExampleScreen: {
       screen: ExampleScreen,
-      nagigationOptions: {
+      navigationOptions: {
         title: 'Example Screen',
         headerStyle: {
           backgroundColor: '#f4511e',
@@ -44,7 +44,7 @@ const StackNavigator = createStackNavigator(
     },
     LoginScreen: {
       screen: LoginScreen,
-      nagigationOptions: {
+      navigationOptions: {
         title: 'Login',
         headerStyle: {
           backgroundColor: '#f4511e',
