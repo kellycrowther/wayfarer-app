@@ -16,14 +16,51 @@ const StackNavigator = createStackNavigator(
     SplashScreen: SplashScreen,
     // The main application screen is our "ExampleScreen". Feel free to replace it with your
     // own screen and remove the example.
-    MainScreen: LoginScreen,
-    screen: ExampleScreen,
+    MainScreen: {
+      screen: LoginScreen,
+      navigationOptions: {
+        title: 'Login',
+        headerStyle: {
+          backgroundColor: '#f4511e',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      },
+    },
+    ExampleScreen: {
+      screen: ExampleScreen,
+      nagigationOptions: {
+        title: 'Example Screen',
+        headerStyle: {
+          backgroundColor: '#f4511e',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      },
+    },
+    LoginScreen: {
+      screen: LoginScreen,
+      nagigationOptions: {
+        title: 'Login',
+        headerStyle: {
+          backgroundColor: '#f4511e',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      },
+    },
   },
   {
     // By default the application will show the splash screen
     initialRouteName: 'SplashScreen',
     // See https://reactnavigation.org/docs/en/stack-navigator.html#stacknavigatorconfig
-    headerMode: 'none',
+    headerMode: 'screen',
   }
 )
 

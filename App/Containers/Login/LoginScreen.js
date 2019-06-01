@@ -65,6 +65,10 @@ class LoginScreen extends React.Component {
               leftIcon={<Icon name="lock" size={24} color="black" />}
             />
             <Button onPress={() => this.handleSubmit()} title="Login" />
+            <Button
+              onPress={() => this.props.navigation.navigate('ExampleScreen')}
+              title="Register"
+            />
           </View>
         )}
       </View>
@@ -78,6 +82,9 @@ LoginScreen.propTypes = {
   userErrorMessage: PropTypes.string,
   login: PropTypes.func,
   liveInEurope: PropTypes.bool,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 }
 
 const mapStateToProps = (state) => ({
