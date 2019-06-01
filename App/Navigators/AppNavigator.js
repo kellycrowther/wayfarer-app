@@ -3,6 +3,7 @@ import { createAppContainer, createStackNavigator } from 'react-navigation'
 import ExampleScreen from 'App/Containers/Example/ExampleScreen'
 import SplashScreen from 'App/Containers/SplashScreen/SplashScreen'
 import LoginScreen from '../Containers/Login/LoginScreen'
+import RegisterScreen from '../Containers/Register/RegisterScreen'
 
 /**
  * The root screen contains the application's navigation.
@@ -46,6 +47,19 @@ const StackNavigator = createStackNavigator(
       screen: LoginScreen,
       navigationOptions: {
         title: 'Login',
+        headerStyle: {
+          backgroundColor: '#f4511e',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      },
+    },
+    RegisterScreen: {
+      screen: RegisterScreen,
+      navigationOptions: {
+        title: 'Register',
         headerStyle: {
           backgroundColor: '#f4511e',
         },

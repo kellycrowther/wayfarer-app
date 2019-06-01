@@ -1,9 +1,10 @@
 import React from 'react'
-import { View, Button, Image, Text, Input, Modal } from 'react-native'
+import { View, Image, Text, Button } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
-import Style from './LoginScreenStyle'
-import { createUser, confirmUserSignUp } from '../actions'
+import Style from './RegisterScreenStyle'
+import { createUser, confirmUserSignUp } from '../../Stores/Register/Actions'
+import { TextInput } from 'react-native-gesture-handler'
 
 const initialState = {
   username: '',
@@ -11,15 +12,20 @@ const initialState = {
   email: '',
   phone_number: '',
   authCode: '',
+  auth: {
+    showSignUpConfirmationModal: true,
+    isAuthenticating: false,
+    signUpErrorMessage: 'There was an error trying to sign up.',
+  },
 }
 
-class LoginScreen extends React.Component {
+class RegisterScreen extends React.Component {
   constructor() {
     super()
     this.state = initialState
   }
   componentDidMount() {
-    console.info('LoginScreen->componentDidMount', this.props)
+    console.info('RegisterScreen->componentDidMount', this.props)
   }
 
   onChangeText = (key, value) => {
@@ -39,75 +45,52 @@ class LoginScreen extends React.Component {
   }
 
   render() {
-    const {
-      auth: { showSignUpConfirmationModal, isAuthenticating, signUpErrorMessage },
-    } = this.props
     return (
       <View style={Style.container}>
         <View style={Style.heading}>
-          <Image
-            source={require('../assets/shape.png')}
-            style={Style.headingImage}
-            resizeMode="contain"
-          />
+          <Image resizeMode="contain" />
         </View>
         <Text style={Style.greeting}>Welcome,</Text>
         <Text style={Style.greeting2}>sign up to continue</Text>
         <View style={Style.inputContainer}>
-          <Input
+          <TextInput
             value={this.state.username}
             placeholder="User Name"
             type="username"
             onChangeText={this.onChangeText}
           />
-          <Input
+          <TextInput
             value={this.state.email}
             placeholder="Email"
             type="email"
             onChangeText={this.onChangeText}
           />
-          <Input
+          <TextInput
             value={this.state.password}
             placeholder="Password"
             secureTextEntry
             type="password"
             onChangeText={this.onChangeText}
           />
-          <Input
+          <TextInput
             placeholder="Phone Number"
             type="phone_number"
             keyboardType="numeric"
             onChangeText={this.onChangeText}
             value={this.state.phone_number}
           />
+          <Button
+            title="Sign Up"
+            onPress={this.signUp.bind(this)}
+            isLoading={this.state.auth.isAuthenticating}
+          />
         </View>
-        <Button title="Sign Up" onPress={this.signUp.bind(this)} isLoading={isAuthenticating} />
-        <Text>Error logging in. Please try again.</Text>
-        <Text>{signUpErrorMessage}</Text>
-        {showSignUpConfirmationModal && (
-          <Modal>
-            <View style={Style.modal}>
-              <Input
-                placeholder="Authorization Code"
-                type="authCode"
-                keyboardType="numeric"
-                onChangeText={this.onChangeText}
-                value={this.state.authCode}
-              />
-              <Button
-                title="Confirm"
-                onPress={this.confirm.bind(this)}
-                isLoading={isAuthenticating}
-              />
-            </View>
-          </Modal>
-        )}
       </View>
     )
   }
 }
 
-LoginScreen.propTypes = {
+RegisterScreen.propTypes = {
   auth: PropTypes.object,
   dispatchCreateUser: PropTypes.func,
   dispatchConfirmUser: PropTypes.func,
@@ -117,13 +100,13 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 })
 
-const mapDispatchToProps = {
-  dispatchConfirmUser: (username, authCode) => confirmUserSignUp(username, authCode),
+const mapDispatchToProps = (dispatch) => ({
+  dispatchConfirmUser: (username) => dispatch(confirmUserSignUp(username)),
   dispatchCreateUser: (username, password, email, phoneNumber) =>
-    createUser(username, password, email, phoneNumber),
-}
+    dispatch(createUser(username, password, email, phoneNumber)),
+})
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginScreen)
+)(RegisterScreen)

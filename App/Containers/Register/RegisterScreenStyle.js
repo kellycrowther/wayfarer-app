@@ -9,20 +9,20 @@ export default StyleSheet.create({
     paddingHorizontal: 40,
   },
   errorMessage: {
-    Fontsize: 12,
     color: 'transparent',
     fontFamily: Fonts.regular,
+    fontSize: 12,
     marginTop: 10,
   },
   greeting: {
-    Fontsize: 24,
     fontFamily: Fonts.regular,
+    fontSize: 24,
     marginTop: 20,
   },
   greeting2: {
-    Fontsize: 24,
     color: '#666',
     fontFamily: Fonts.regular,
+    fontSize: 24,
     marginTop: 5,
   },
   heading: {
