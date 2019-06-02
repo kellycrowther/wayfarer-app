@@ -1,6 +1,7 @@
 import { put, call } from 'redux-saga/effects'
 import RegisterActions from 'App/Stores/Register/Actions'
 import { userService } from 'App/Services/UserService'
+import NavigationService from 'App/Services/NavigationService'
 
 export function* createUser(username, password, email) {
   console.info('saga create user', username)
@@ -14,6 +15,7 @@ export function* createUser(username, password, email) {
       token: token,
     }
     yield put(RegisterActions.fetchUserSuccess(userInformation))
+    NavigationService.navigateAndReset('MainScreen')
   } else {
     yield put(
       RegisterActions.fetchUserFailure('There was an error while fetching user informations.')
