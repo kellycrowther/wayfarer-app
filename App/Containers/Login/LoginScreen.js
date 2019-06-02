@@ -26,14 +26,10 @@ class LoginScreen extends React.Component {
     console.info('LoginScreen->componentDidMount', this.props)
   }
 
-  setPassword(password) {
-    password = password.toLowerCase()
-    this.setState({ password: password })
-  }
-
-  setUserName(username) {
-    username = username.toLowerCase()
-    this.setState({ username: username })
+  onChangeText = (key, value) => {
+    this.setState({
+      [key]: value,
+    })
   }
 
   handleSubmit() {
@@ -49,7 +45,7 @@ class LoginScreen extends React.Component {
           <View>
             <TextInput
               autoCapitalize="none"
-              onChangeText={(text) => this.setUserName(text)}
+              onChangeText={(text) => this.onChangeText('username', text)}
               placeholder="Username"
               inputStyle={Style.textInput}
               inputContainerStyle={Style.inputContainer}
@@ -58,7 +54,7 @@ class LoginScreen extends React.Component {
             <TextInput
               autoCapitalize="none"
               secureTextEntry
-              onChangeText={(text) => this.setPassword(text)}
+              onChangeText={(text) => this.onChangeText('password', text)}
               placeholder="Password"
               inputStyle={Style.textInput}
               inputContainerStyle={Style.inputContainer}
