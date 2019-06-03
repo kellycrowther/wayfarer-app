@@ -4,6 +4,7 @@ import ExampleScreen from 'App/Containers/Example/ExampleScreen'
 import SplashScreen from 'App/Containers/SplashScreen/SplashScreen'
 import LoginScreen from '../Containers/Login/LoginScreen'
 import RegisterScreen from '../Containers/Register/RegisterScreen'
+import DestinationsMapScreen from '../Containers/DestinationsMap/DestinationsMapScreen'
 
 /**
  * The root screen contains the application's navigation.
@@ -18,9 +19,9 @@ const StackNavigator = createStackNavigator(
     // The main application screen is our "ExampleScreen". Feel free to replace it with your
     // own screen and remove the example.
     MainScreen: {
-      screen: ExampleScreen,
+      screen: DestinationsMapScreen,
       navigationOptions: {
-        title: 'Example Screen',
+        title: 'Destinations',
         headerStyle: {
           backgroundColor: '#f4511e',
         },
@@ -58,6 +59,19 @@ const StackNavigator = createStackNavigator(
     },
     RegisterScreen: {
       screen: RegisterScreen,
+      navigationOptions: {
+        title: 'Register',
+        headerStyle: {
+          backgroundColor: '#f4511e',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      },
+    },
+    DestinationsMapScreen: {
+      screen: DestinationsMapScreen,
       navigationOptions: {
         title: 'Register',
         headerStyle: {
