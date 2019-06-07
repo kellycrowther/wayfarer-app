@@ -20,10 +20,25 @@ export const fetchMapFailure = (state, { errorMessage }) => ({
   mapErrorMessage: errorMessage,
 })
 
+export const addMarker = (state, { feature }) => ({
+  ...state,
+  coordinates: [
+    ...state.coordinates,
+    { showCallout: false, coordinate: feature.geometry.coordinates },
+  ],
+})
+
+export const purge = (state) => ({
+  ...state,
+  coordinates: [],
+})
+
 /**
  * @see https://github.com/infinitered/reduxsauce#createreducer
  */
 export const reducer = createReducer(INITIAL_STATE, {
   [DestinationsMapTypes.FETCH_MAP_SUCCESS]: fetchMapSuccess,
   [DestinationsMapTypes.FETCH_MAP_FAILURE]: fetchMapFailure,
+  [DestinationsMapTypes.ADD_MARKER]: addMarker,
+  [DestinationsMapTypes.PURGE]: purge,
 })

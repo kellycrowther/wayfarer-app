@@ -21,6 +21,10 @@ import { createActions } from 'reduxsauce'
 const { Types, Creators } = createActions({
   // Get Map
   getMap: null,
+  // Add A Marker to the map
+  addMarker: ['feature'],
+  // Clear Marker State
+  purge: null,
   fetchMapSuccess: null,
   fetchMapFailure: null,
 })

@@ -6,6 +6,7 @@ import Style from './DestinationsMapScreenStyle'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import Bubble from 'App/Components/Bubble'
 import CustomCallout from 'App/Components/CustomCallout/CustomCallout'
+import DestinationActions from 'App/Stores/DestinationsMap/Actions'
 
 MapboxGL.setAccessToken(
   'pk.eyJ1Ijoia2VsbHljcm93dGhlciIsImEiOiJjandmbWN0emIweDNmNDRrZHV3YzV0b3BqIn0.S-VaWf5_L6ZFUFWqZjglBQ'
@@ -25,18 +26,21 @@ class DestinationsMapScreen extends React.Component {
 
     this._scaleIn = null
     this._scaleOut = null
+  }
 
-    this.addMarker = this.addMarker.bind(this)
+  componentWillReceiveProps(nextProps) {
+    if (this.props.coordinates !== nextProps.coordinates) {
+      this.setState({
+        coordinates: nextProps.coordinates,
+      })
+    }
   }
 
   addMarker(feature) {
-    this.setState({
-      ...this.state,
-      coordinates: [
-        ...this.state.coordinates,
-        { showCallout: false, coordinate: feature.geometry.coordinates },
-      ],
-    })
+    console.info('FIRED: ', feature)
+    this.props.addMarker(feature)
+    this.forceUpdate()
+    console.info('STATE: ', this.state)
   }
 
   onAnnotationSelected(feature, selectedIndex) {
@@ -84,6 +88,11 @@ class DestinationsMapScreen extends React.Component {
   renderAnnotations() {
     const items = []
 
+    console.info('COORDINATES: ', this.state.coordinates)
+    if (this.state.coordinates.length === 0) {
+      return
+    }
+
     for (let i = 0; i < this.state.coordinates.length; i++) {
       const coordinate = this.state.coordinates[i].coordinate
 
@@ -119,21 +128,28 @@ class DestinationsMapScreen extends React.Component {
   }
 
   render() {
+    let camera
+    let annotations
+    if (this.state.coordinates.length > 0) {
+      camera = (
+        <MapboxGL.Camera zoomLevel={16} centerCoordinate={this.state.coordinates[0].coordinate} />
+      )
+      annotations = this.renderAnnotations()
+    }
     return (
       <View {...this.props} style={Style.container}>
         <MapboxGL.MapView
           ref={(c) => (this._map = c)}
-          onPress={this.addMarker}
+          onPress={(feature) => this.props.addMarker(feature)}
           onDidFinishLoadingMap={this.onDidFinishLoadingMap}
           style={Style.mapBoxContainer}
         >
-          <MapboxGL.Camera zoomLevel={16} centerCoordinate={this.state.coordinates[0].coordinate} />
-
-          {this.renderAnnotations()}
+          {camera}
+          {annotations}
         </MapboxGL.MapView>
 
         <Bubble>
-          <Text>Click to add a point annotation</Text>
+          <Text onPress={() => this.props.purge()}>Clear Annotations</Text>
         </Bubble>
       </View>
     )
@@ -152,6 +168,8 @@ DestinationsMapScreen.propTypes = {
       coordinate: PropTypes.arrayOf(PropTypes.number),
     })
   ),
+  addMarker: PropTypes.func,
+  purge: PropTypes.func,
 }
 
 const mapStateToProps = (state) => ({
@@ -162,7 +180,10 @@ const mapStateToProps = (state) => ({
   coordinates: state.destination.coordinates,
 })
 
-const mapDispatchToProps = (dispatch) => ({})
+const mapDispatchToProps = (dispatch) => ({
+  addMarker: (feature) => dispatch(DestinationActions.addMarker(feature)),
+  purge: () => dispatch(DestinationActions.purge()),
+})
 
 export default connect(
   mapStateToProps,
