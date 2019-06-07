@@ -10,6 +10,18 @@ export default StyleSheet.create({
   map: {
     flex: 1,
   },
+  mapBoxContainer: {
+    flex: 1,
+  },
+  marker: {
+    flex: 1,
+    height: 25,
+    resizeMode: 'contain',
+    width: 25,
+  },
+  markerContainer: {
+    flex: 1,
+  },
   page: {
     alignItems: 'center',
     backgroundColor: '#F5FCFF',

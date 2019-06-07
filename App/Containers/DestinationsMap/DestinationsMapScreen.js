@@ -1,71 +1,118 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react'
-import { View, Image } from 'react-native'
+import PropTypes from 'prop-types'
+import { View, Text, Animated, Image } from 'react-native'
 import { connect } from 'react-redux'
 import Style from './DestinationsMapScreenStyle'
 import MapboxGL from '@react-native-mapbox-gl/maps'
+import Bubble from 'App/Components/Bubble'
+import CustomCallout from 'App/Components/CustomCallout/CustomCallout'
 
 MapboxGL.setAccessToken(
   'pk.eyJ1Ijoia2VsbHljcm93dGhlciIsImEiOiJjandmbWN0emIweDNmNDRrZHV3YzV0b3BqIn0.S-VaWf5_L6ZFUFWqZjglBQ'
 )
 
 class DestinationsMapScreen extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
+
     this.state = {
+      activeAnnotationIndex: this.props.activeAnnotationIndex,
+      previousActiveAnnotationIndex: this.props.previousActiveAnnotationIndex,
+
+      backgroundColor: this.props.backgroundColor,
+      coordinates: this.props.coordinates,
+    }
+
+    this._scaleIn = null
+    this._scaleOut = null
+
+    this.addMarker = this.addMarker.bind(this)
+  }
+
+  addMarker(feature) {
+    this.setState({
+      ...this.state,
       coordinates: [
-        [-73.98330688476561, 40.76975180901395],
-        [-73.96682739257812, 40.761560925502806],
-        [-74.00751113891602, 40.746346606483826],
-        [-73.95343780517578, 40.7849607714286],
-        [-73.99017333984375, 40.71135347314246],
-        [-73.98880004882812, 40.758960433915284],
-        [-73.96064758300781, 40.718379593199494],
-        [-73.95172119140624, 40.82731951134558],
-        [-73.9829635620117, 40.769101775774935],
-        [-73.9822769165039, 40.76273111352534],
-        [-73.98571014404297, 40.748947591479705],
+        ...this.state.coordinates,
+        { showCallout: false, coordinate: feature.geometry.coordinates },
       ],
+    })
+  }
+
+  onAnnotationSelected(feature, selectedIndex) {
+    this._scaleIn = new Animated.Value(0.6)
+    Animated.timing(this._scaleIn, { toValue: 1.0, duration: 200 }).start()
+
+    let newState = this.state.coordinates.map((item, index) => {
+      if (index !== selectedIndex) {
+        return item
+      }
+
+      if (index === selectedIndex) {
+        return {
+          ...item,
+          showCallout: !item.showCallout,
+        }
+      }
+    })
+
+    this.setState({
+      ...this.state,
+      coordinates: newState,
+    })
+
+    this.forceUpdate()
+
+    if (this.state.previousActiveAnnotationIndex !== -1) {
+      this._map.moveTo(feature.geometry.coordinates, 500)
     }
   }
-  componentDidMount() {
-    console.info('DestinationsMapScreen->componentDidMount', this.props)
-    MapboxGL.setTelemetryEnabled(false)
-  }
 
-  renderAnnotation(counter) {
-    const id = `pointAnnotation${counter}`
-    const coordinate = this.state.coordinates[counter]
-    const title = `Longitude: ${this.state.coordinates[counter][0]} Latitude: ${
-      this.state.coordinates[counter][1]
-    }`
+  onAnnotationDeselected(deselectedIndex) {
+    const nextState = {}
 
-    return (
-      <MapboxGL.PointAnnotation
-        key={id}
-        id={id}
-        title={title}
-        coordinate={coordinate}
-        onSelected={console.info('Clicked Marker!')}
-      >
-        <Image
-          source={require('App/Images/marker.png')}
-          style={{
-            flex: 1,
-            resizeMode: 'contain',
-            width: 25,
-            height: 25,
-          }}
-        />
-      </MapboxGL.PointAnnotation>
-    )
+    if (this.state.activeAnnotationIndex === deselectedIndex) {
+      nextState.activeAnnotationIndex = -1
+    }
+
+    this._scaleOut = new Animated.Value(1)
+    Animated.timing(this._scaleOut, { toValue: 0.6, duration: 200 }).start()
+    nextState.previousActiveAnnotationIndex = deselectedIndex
+    this.setState(nextState)
   }
 
   renderAnnotations() {
     const items = []
 
     for (let i = 0; i < this.state.coordinates.length; i++) {
-      items.push(this.renderAnnotation(i))
+      const coordinate = this.state.coordinates[i].coordinate
+
+      const id = `pointAnnotation${i}`
+
+      const animationStyle = {}
+      if (i === this.state.activeAnnotationIndex) {
+        animationStyle.transform = [{ scale: this._scaleIn }]
+      } else if (i === this.state.previousActiveAnnotationIndex) {
+        animationStyle.transform = [{ scale: this._scaleOut }]
+      }
+
+      items.push(
+        <View key={id} style={Style.markerContainer}>
+          <MapboxGL.PointAnnotation
+            onSelected={(feature) => this.onAnnotationSelected(feature, i)}
+            id={id}
+            coordinate={coordinate}
+          >
+            {this.state.coordinates[i].showCallout && (
+              <CustomCallout
+                title={this.state.coordinates[i].title}
+                subtitle={this.state.coordinates[i].subtitle}
+              />
+            )}
+            <Image source={require('App/Images/marker.png')} style={Style.marker} />
+          </MapboxGL.PointAnnotation>
+        </View>
+      )
     }
 
     return items
@@ -73,28 +120,47 @@ class DestinationsMapScreen extends React.Component {
 
   render() {
     return (
-      <View style={Style.page}>
-        <View style={Style.container}>
-          <MapboxGL.MapView
-            // eslint-disable-next-line no-return-assign
-            ref={(c) => (this._map = c)}
-            style={{ flex: 1 }}
-            zoomLevel={11}
-            showUserLocation={true}
-            userTrackingMode={1}
-            centerCoordinate={this.state.coordinates[0]}
-          >
-            {this.renderAnnotations()}
-          </MapboxGL.MapView>
-        </View>
+      <View {...this.props} style={Style.container}>
+        <MapboxGL.MapView
+          ref={(c) => (this._map = c)}
+          onPress={this.addMarker}
+          onDidFinishLoadingMap={this.onDidFinishLoadingMap}
+          style={Style.mapBoxContainer}
+        >
+          <MapboxGL.Camera zoomLevel={16} centerCoordinate={this.state.coordinates[0].coordinate} />
+
+          {this.renderAnnotations()}
+        </MapboxGL.MapView>
+
+        <Bubble>
+          <Text>Click to add a point annotation</Text>
+        </Bubble>
       </View>
     )
   }
 }
 
-DestinationsMapScreen.propTypes = {}
+DestinationsMapScreen.propTypes = {
+  activeAnnotationIndex: PropTypes.number,
+  previousActiveAnnotationIndex: PropTypes.number,
+  backgroundColor: PropTypes.string,
+  coordinates: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      subtitle: PropTypes.string,
+      showCallout: PropTypes.showCallout,
+      coordinate: PropTypes.arrayOf(PropTypes.number),
+    })
+  ),
+}
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state) => ({
+  activeAnnotationIndex: state.destination.activeAnnotationIndex,
+  previousActiveAnnotationIndex: state.destination.previousActiveAnnotationIndex,
+
+  backgroundColor: state.destination.backgroundColor,
+  coordinates: state.destination.coordinates,
+})
 
 const mapDispatchToProps = (dispatch) => ({})
 
