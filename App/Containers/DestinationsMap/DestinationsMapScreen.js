@@ -6,7 +6,7 @@ import Style from './DestinationsMapScreenStyle'
 import MapboxGL from '@react-native-mapbox-gl/maps'
 import CustomCallout from 'App/Components/CustomCallout/CustomCallout'
 import DestinationActions from 'App/Stores/DestinationsMap/Actions'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import MapControls from 'App/Components/MapControls/MapControls'
 
 MapboxGL.setAccessToken(
   'pk.eyJ1Ijoia2VsbHljcm93dGhlciIsImEiOiJjandmbWN0emIweDNmNDRrZHV3YzV0b3BqIn0.S-VaWf5_L6ZFUFWqZjglBQ'
@@ -45,6 +45,14 @@ class DestinationsMapScreen extends React.Component {
   addMarker(feature) {
     this.props.addMarker(feature)
     this.forceUpdate()
+  }
+
+  increaseZoom() {
+    this.setState({ ...this.state, zoomLevel: this.state.zoomLevel + 1 })
+  }
+
+  decreaseZoom() {
+    this.setState({ ...this.state, zoomLevel: this.state.zoomLevel - 1 })
   }
 
   onAnnotationSelected(feature, selectedIndex) {
@@ -167,32 +175,11 @@ class DestinationsMapScreen extends React.Component {
           {camera}
           {annotations}
         </MapboxGL.MapView>
-        <View style={Style.mapControls}>
-          <View style={Style.increaseZoom}>
-            <FontAwesome
-              name="plus"
-              size={Style.mapControlIcon.size}
-              color="white"
-              style={Style.mapControlIcon}
-            />
-          </View>
-          <View style={Style.increaseZoom}>
-            <FontAwesome
-              name="minus"
-              size={Style.mapControlIcon.size}
-              color="white"
-              style={Style.mapControlIcon}
-            />
-          </View>
-          <View style={Style.increaseZoom}>
-            <FontAwesome
-              name="trash"
-              size={Style.mapControlIcon.size}
-              color="white"
-              style={Style.mapControlIcon}
-            />
-          </View>
-        </View>
+        <MapControls
+          increaseZoom={() => this.increaseZoom()}
+          decreaseZoom={() => this.decreaseZoom()}
+          removeMarkers={() => this.props.purge()}
+        />
       </View>
     )
   }
@@ -213,6 +200,7 @@ DestinationsMapScreen.propTypes = {
   addMarker: PropTypes.func,
   purge: PropTypes.func,
   centerCoordinate: PropTypes.arrayOf(PropTypes.number),
+  zoomLevel: PropTypes.number,
 }
 
 const mapStateToProps = (state) => ({
