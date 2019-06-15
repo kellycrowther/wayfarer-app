@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, Text, Animated, Image } from 'react-native'
+import { View, Animated, Image } from 'react-native'
 import { connect } from 'react-redux'
 import Style from './DestinationsMapScreenStyle'
 import MapboxGL from '@react-native-mapbox-gl/maps'
-import Bubble from 'App/Components/Bubble'
 import CustomCallout from 'App/Components/CustomCallout/CustomCallout'
 import DestinationActions from 'App/Stores/DestinationsMap/Actions'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 MapboxGL.setAccessToken(
   'pk.eyJ1Ijoia2VsbHljcm93dGhlciIsImEiOiJjandmbWN0emIweDNmNDRrZHV3YzV0b3BqIn0.S-VaWf5_L6ZFUFWqZjglBQ'
@@ -22,10 +22,16 @@ class DestinationsMapScreen extends React.Component {
 
       backgroundColor: this.props.backgroundColor,
       coordinates: this.props.coordinates,
+      zoomLevel: 16,
+      centerCoordinate: [],
     }
 
     this._scaleIn = null
     this._scaleOut = null
+  }
+
+  componentWillMount() {
+    this.determineCenterCoordinate()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -37,10 +43,8 @@ class DestinationsMapScreen extends React.Component {
   }
 
   addMarker(feature) {
-    console.info('FIRED: ', feature)
     this.props.addMarker(feature)
     this.forceUpdate()
-    console.info('STATE: ', this.state)
   }
 
   onAnnotationSelected(feature, selectedIndex) {
@@ -88,7 +92,6 @@ class DestinationsMapScreen extends React.Component {
   renderAnnotations() {
     const items = []
 
-    console.info('COORDINATES: ', this.state.coordinates)
     if (this.state.coordinates.length === 0) {
       return
     }
@@ -127,13 +130,30 @@ class DestinationsMapScreen extends React.Component {
     return items
   }
 
+  determineCenterCoordinate() {
+    let centerCoordinate
+    if (
+      this.state.coordinates &&
+      this.state.coordinates[0] &&
+      this.state.coordinates[0].coordinate
+    ) {
+      centerCoordinate = this.state.coordinates[0].coordinate
+      this.setState({ ...this.state, centerCoordinate: centerCoordinate })
+    } else {
+      this.setState({ ...this.state, centerCoordinate: [-73.98330688476561, 40.76975180901395] })
+    }
+  }
+
   render() {
     let camera
     let annotations
+    camera = (
+      <MapboxGL.Camera
+        zoomLevel={this.state.zoomLevel}
+        centerCoordinate={this.state.centerCoordinate}
+      />
+    )
     if (this.state.coordinates.length > 0) {
-      camera = (
-        <MapboxGL.Camera zoomLevel={16} centerCoordinate={this.state.coordinates[0].coordinate} />
-      )
       annotations = this.renderAnnotations()
     }
     return (
@@ -147,10 +167,32 @@ class DestinationsMapScreen extends React.Component {
           {camera}
           {annotations}
         </MapboxGL.MapView>
-
-        <Bubble>
-          <Text onPress={() => this.props.purge()}>Clear Annotations</Text>
-        </Bubble>
+        <View style={Style.mapControls}>
+          <View style={Style.increaseZoom}>
+            <FontAwesome
+              name="plus"
+              size={Style.mapControlIcon.size}
+              color="white"
+              style={Style.mapControlIcon}
+            />
+          </View>
+          <View style={Style.increaseZoom}>
+            <FontAwesome
+              name="minus"
+              size={Style.mapControlIcon.size}
+              color="white"
+              style={Style.mapControlIcon}
+            />
+          </View>
+          <View style={Style.increaseZoom}>
+            <FontAwesome
+              name="trash"
+              size={Style.mapControlIcon.size}
+              color="white"
+              style={Style.mapControlIcon}
+            />
+          </View>
+        </View>
       </View>
     )
   }
@@ -170,6 +212,7 @@ DestinationsMapScreen.propTypes = {
   ),
   addMarker: PropTypes.func,
   purge: PropTypes.func,
+  centerCoordinate: PropTypes.arrayOf(PropTypes.number),
 }
 
 const mapStateToProps = (state) => ({
@@ -178,6 +221,7 @@ const mapStateToProps = (state) => ({
 
   backgroundColor: state.destination.backgroundColor,
   coordinates: state.destination.coordinates,
+  centerCoordinate: state.destination.centerCoordinate,
 })
 
 const mapDispatchToProps = (dispatch) => ({

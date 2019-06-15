@@ -16,4 +16,6 @@ export const INITIAL_STATE = {
       coordinate: [-73.99155, 40.73581],
     },
   ],
+  zoomLevel: 16,
+  centerCoordinate: [-73.98330688476561, 40.76975180901395],
 }
