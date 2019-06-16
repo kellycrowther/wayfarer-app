@@ -101,6 +101,7 @@ class DestinationsMapScreen extends React.Component {
 
     for (let i = 0; i < this.state.wayPoints.length; i++) {
       const coordinate = this.state.wayPoints[i].coordinate
+      const wayPoint = this.state.wayPoints[i]
 
       const id = `pointAnnotation${i}`
 
@@ -120,7 +121,9 @@ class DestinationsMapScreen extends React.Component {
         >
           {this.state.wayPoints[i].showCallout && (
             <CustomCallout
-              onPress={() => this.props.navigation.navigate('WaypointDetailScreen')}
+              onPress={() =>
+                this.props.navigation.navigate('WaypointDetailScreen', { id: wayPoint.id })
+              }
               title={this.state.wayPoints[i].title}
               subtitle={this.state.wayPoints[i].subtitle}
             />
@@ -190,6 +193,7 @@ DestinationsMapScreen.propTypes = {
   ),
   centerCoordinate: PropTypes.arrayOf(PropTypes.number),
   zoomLevel: PropTypes.number,
+  id: PropTypes.number,
   addMarker: PropTypes.func,
   purge: PropTypes.func,
   navigation: PropTypes.shape({
