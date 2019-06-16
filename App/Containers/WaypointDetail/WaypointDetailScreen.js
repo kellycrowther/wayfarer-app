@@ -2,8 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Text, View } from 'react-native'
 import Style from './WaypointDetailScreenStyle'
+import { connect } from 'react-redux'
 
 class WaypointDetailScreen extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      ...this.props,
+    }
+    console.info('STATE: ', this.state)
+  }
+
   componentDidMount() {
     const { navigation } = this.props
     const id = navigation.getParam('id', 'NO-ID')
@@ -25,4 +35,8 @@ WaypointDetailScreen.propTypes = {
   }).isRequired,
 }
 
-export default WaypointDetailScreen
+const mapStateToProps = (state) => ({
+  waypoint: state.waypoint,
+})
+
+export default connect(mapStateToProps)(WaypointDetailScreen)

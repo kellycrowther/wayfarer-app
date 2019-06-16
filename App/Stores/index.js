@@ -5,6 +5,7 @@ import { reducer as ExampleReducer } from './Example/Reducers'
 import { reducer as LoginReducer } from './Login/Reducers'
 import { reducer as RegisterReducer } from './Register/Reducers'
 import { reducer as DestinationsMapReducer } from './DestinationsMap/Reducers'
+import { reducer as WaypointReducer } from './WaypointDetail/Reducers'
 
 export default () => {
   const rootReducer = combineReducers({
@@ -16,6 +17,7 @@ export default () => {
     login: LoginReducer,
     register: RegisterReducer,
     destination: DestinationsMapReducer,
+    waypoint: WaypointReducer,
   })
 
   return configureStore(rootReducer, rootSaga)
