@@ -10,6 +10,8 @@ export default StyleSheet.create({
     minWidth: 150,
     padding: 5,
     top: -10,
+    position: 'relative',
+    zIndex: 9999,
   },
   icon: {
     flexBasis: '10%',

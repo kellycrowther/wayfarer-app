@@ -112,21 +112,21 @@ class DestinationsMapScreen extends React.Component {
       }
 
       items.push(
-        <View key={id} style={Style.markerContainer}>
-          <MapboxGL.PointAnnotation
-            onSelected={(feature) => this.onAnnotationSelected(feature, i)}
-            id={id}
-            coordinate={coordinate}
-          >
-            {this.state.wayPoints[i].showCallout && (
-              <CustomCallout
-                title={this.state.wayPoints[i].title}
-                subtitle={this.state.wayPoints[i].subtitle}
-              />
-            )}
-            <Image source={require('App/Images/marker.png')} style={Style.marker} />
-          </MapboxGL.PointAnnotation>
-        </View>
+        <MapboxGL.PointAnnotation
+          onSelected={(feature) => this.onAnnotationSelected(feature, i)}
+          id={id}
+          key={id}
+          coordinate={coordinate}
+        >
+          {this.state.wayPoints[i].showCallout && (
+            <CustomCallout
+              onPress={() => this.props.navigation.navigate('WaypointDetailScreen')}
+              title={this.state.wayPoints[i].title}
+              subtitle={this.state.wayPoints[i].subtitle}
+            />
+          )}
+          <Image source={require('App/Images/marker.png')} style={Style.marker} />
+        </MapboxGL.PointAnnotation>
       )
     }
 
@@ -192,6 +192,9 @@ DestinationsMapScreen.propTypes = {
   zoomLevel: PropTypes.number,
   addMarker: PropTypes.func,
   purge: PropTypes.func,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 }
 
 const mapStateToProps = (state) => ({

@@ -5,6 +5,7 @@ import SplashScreen from 'App/Containers/SplashScreen/SplashScreen'
 import LoginScreen from '../Containers/Login/LoginScreen'
 import RegisterScreen from '../Containers/Register/RegisterScreen'
 import DestinationsMapScreen from '../Containers/DestinationsMap/DestinationsMapScreen'
+import WaypointDetailScreen from 'App/Containers/WaypointDetail/WaypointDetailScreen'
 
 /**
  * The root screen contains the application's navigation.
@@ -74,6 +75,19 @@ const StackNavigator = createStackNavigator(
       screen: DestinationsMapScreen,
       navigationOptions: {
         title: 'Register',
+        headerStyle: {
+          backgroundColor: '#f4511e',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      },
+    },
+    WaypointDetailScreen: {
+      screen: WaypointDetailScreen,
+      navigationOptions: {
+        title: 'Waypoint',
         headerStyle: {
           backgroundColor: '#f4511e',
         },
