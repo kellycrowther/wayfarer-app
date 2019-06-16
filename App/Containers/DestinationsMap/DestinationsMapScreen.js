@@ -17,13 +17,8 @@ class DestinationsMapScreen extends React.Component {
     super(props)
 
     this.state = {
-      activeAnnotationIndex: this.props.activeAnnotationIndex,
-      previousActiveAnnotationIndex: this.props.previousActiveAnnotationIndex,
-
-      backgroundColor: this.props.backgroundColor,
-      coordinates: this.props.coordinates,
-      zoomLevel: 16,
-      centerCoordinate: [],
+      ...this.props,
+      centerCoordinate: null,
     }
 
     this._scaleIn = null
@@ -35,9 +30,9 @@ class DestinationsMapScreen extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.coordinates !== nextProps.coordinates) {
+    if (this.state.wayPoints !== nextProps.wayPoints) {
       this.setState({
-        coordinates: nextProps.coordinates,
+        wayPoints: nextProps.wayPoints,
       })
     }
   }
@@ -59,7 +54,7 @@ class DestinationsMapScreen extends React.Component {
     this._scaleIn = new Animated.Value(0.6)
     Animated.timing(this._scaleIn, { toValue: 1.0, duration: 200 }).start()
 
-    let newState = this.state.coordinates.map((item, index) => {
+    let newState = this.state.wayPoints.map((item, index) => {
       if (index !== selectedIndex) {
         return item
       }
@@ -74,7 +69,7 @@ class DestinationsMapScreen extends React.Component {
 
     this.setState({
       ...this.state,
-      coordinates: newState,
+      wayPoints: newState,
     })
 
     this.forceUpdate()
@@ -100,12 +95,12 @@ class DestinationsMapScreen extends React.Component {
   renderAnnotations() {
     const items = []
 
-    if (this.state.coordinates.length === 0) {
+    if (this.state.wayPoints.length === 0) {
       return
     }
 
-    for (let i = 0; i < this.state.coordinates.length; i++) {
-      const coordinate = this.state.coordinates[i].coordinate
+    for (let i = 0; i < this.state.wayPoints.length; i++) {
+      const coordinate = this.state.wayPoints[i].coordinate
 
       const id = `pointAnnotation${i}`
 
@@ -123,10 +118,10 @@ class DestinationsMapScreen extends React.Component {
             id={id}
             coordinate={coordinate}
           >
-            {this.state.coordinates[i].showCallout && (
+            {this.state.wayPoints[i].showCallout && (
               <CustomCallout
-                title={this.state.coordinates[i].title}
-                subtitle={this.state.coordinates[i].subtitle}
+                title={this.state.wayPoints[i].title}
+                subtitle={this.state.wayPoints[i].subtitle}
               />
             )}
             <Image source={require('App/Images/marker.png')} style={Style.marker} />
@@ -140,12 +135,8 @@ class DestinationsMapScreen extends React.Component {
 
   determineCenterCoordinate() {
     let centerCoordinate
-    if (
-      this.state.coordinates &&
-      this.state.coordinates[0] &&
-      this.state.coordinates[0].coordinate
-    ) {
-      centerCoordinate = this.state.coordinates[0].coordinate
+    if (this.state.wayPoints && this.state.wayPoints[0] && this.state.wayPoints[0].coordinate) {
+      centerCoordinate = this.state.wayPoints[0].coordinate
       this.setState({ ...this.state, centerCoordinate: centerCoordinate })
     } else {
       this.setState({ ...this.state, centerCoordinate: [-73.98330688476561, 40.76975180901395] })
@@ -161,7 +152,7 @@ class DestinationsMapScreen extends React.Component {
         centerCoordinate={this.state.centerCoordinate}
       />
     )
-    if (this.state.coordinates.length > 0) {
+    if (this.state.wayPoints.length > 0) {
       annotations = this.renderAnnotations()
     }
     return (
@@ -189,7 +180,7 @@ DestinationsMapScreen.propTypes = {
   activeAnnotationIndex: PropTypes.number,
   previousActiveAnnotationIndex: PropTypes.number,
   backgroundColor: PropTypes.string,
-  coordinates: PropTypes.arrayOf(
+  wayPoints: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string,
       subtitle: PropTypes.string,
@@ -197,10 +188,10 @@ DestinationsMapScreen.propTypes = {
       coordinate: PropTypes.arrayOf(PropTypes.number),
     })
   ),
-  addMarker: PropTypes.func,
-  purge: PropTypes.func,
   centerCoordinate: PropTypes.arrayOf(PropTypes.number),
   zoomLevel: PropTypes.number,
+  addMarker: PropTypes.func,
+  purge: PropTypes.func,
 }
 
 const mapStateToProps = (state) => ({
@@ -208,8 +199,9 @@ const mapStateToProps = (state) => ({
   previousActiveAnnotationIndex: state.destination.previousActiveAnnotationIndex,
 
   backgroundColor: state.destination.backgroundColor,
-  coordinates: state.destination.coordinates,
+  wayPoints: state.destination.wayPoints,
   centerCoordinate: state.destination.centerCoordinate,
+  zoomLevel: state.destination.zoomLevel,
 })
 
 const mapDispatchToProps = (dispatch) => ({

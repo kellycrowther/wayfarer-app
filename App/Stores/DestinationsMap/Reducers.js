@@ -30,7 +30,7 @@ export const addMarker = (state, { feature }) => ({
 
 export const purge = (state) => ({
   ...state,
-  coordinates: [],
+  wayPoints: [],
 })
 
 /**
