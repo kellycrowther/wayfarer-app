@@ -3,10 +3,13 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: 'tomato',
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    backgroundColor: 'blue',
     flex: 1,
   },
   map: {
+    ...StyleSheet.absoluteFillObject,
     flex: 1,
   },
   mapBoxContainer: {

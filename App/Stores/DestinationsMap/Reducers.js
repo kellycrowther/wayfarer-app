@@ -20,12 +20,9 @@ export const fetchMapFailure = (state, { errorMessage }) => ({
   mapErrorMessage: errorMessage,
 })
 
-export const addMarker = (state, { feature }) => ({
+export const addMarker = (state, { wayPoint }) => ({
   ...state,
-  coordinates: [
-    ...state.coordinates,
-    { showCallout: false, coordinate: feature.geometry.coordinates },
-  ],
+  wayPoints: [...state.wayPoints, wayPoint.title],
 })
 
 export const purge = (state) => ({

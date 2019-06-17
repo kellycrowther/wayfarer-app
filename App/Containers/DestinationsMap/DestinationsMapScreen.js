@@ -3,19 +3,16 @@ import PropTypes from 'prop-types'
 import { View, Animated, Image } from 'react-native'
 import { connect } from 'react-redux'
 import Style from './DestinationsMapScreenStyle'
-import MapboxGL from '@react-native-mapbox-gl/maps'
 import CustomCallout from 'App/Components/CustomCallout/CustomCallout'
 import DestinationActions from 'App/Stores/DestinationsMap/Actions'
-import MapControls from 'App/Components/MapControls/MapControls'
-
-MapboxGL.setAccessToken(
-  'pk.eyJ1Ijoia2VsbHljcm93dGhlciIsImEiOiJjandmbWN0emIweDNmNDRrZHV3YzV0b3BqIn0.S-VaWf5_L6ZFUFWqZjglBQ'
-)
+// import MapControls from 'App/Components/MapControls/MapControls'
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 
 class DestinationsMapScreen extends React.Component {
   constructor(props) {
     super(props)
 
+    console.info('PROPS: ', props)
     this.state = {
       ...this.props,
       centerCoordinate: null,
@@ -26,7 +23,7 @@ class DestinationsMapScreen extends React.Component {
   }
 
   componentWillMount() {
-    this.determineCenterCoordinate()
+    // this.determineCenterCoordinate()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -99,8 +96,10 @@ class DestinationsMapScreen extends React.Component {
       return
     }
 
+    console.info('STATE: ', this.state.wayPoints[0])
+
     for (let i = 0; i < this.state.wayPoints.length; i++) {
-      const coordinate = this.state.wayPoints[i].coordinate
+      const coordinate = this.state.wayPoints[i].location
       const wayPoint = this.state.wayPoints[i]
 
       const id = `pointAnnotation${i}`
@@ -113,7 +112,7 @@ class DestinationsMapScreen extends React.Component {
       }
 
       items.push(
-        <MapboxGL.PointAnnotation
+        <Marker
           onSelected={(feature) => this.onAnnotationSelected(feature, i)}
           id={id}
           key={id}
@@ -129,50 +128,35 @@ class DestinationsMapScreen extends React.Component {
             />
           )}
           <Image source={require('App/Images/marker.png')} style={Style.marker} />
-        </MapboxGL.PointAnnotation>
+        </Marker>
       )
     }
 
     return items
   }
 
-  determineCenterCoordinate() {
-    let centerCoordinate
-    if (this.state.wayPoints && this.state.wayPoints[0] && this.state.wayPoints[0].coordinate) {
-      centerCoordinate = this.state.wayPoints[0].coordinate
-      this.setState({ ...this.state, centerCoordinate: centerCoordinate })
-    } else {
-      this.setState({ ...this.state, centerCoordinate: [-73.98330688476561, 40.76975180901395] })
-    }
-  }
+  // determineCenterCoordinate() {
+  //   let centerCoordinate
+  //   if (this.state.wayPoints && this.state.wayPoints[0] && this.state.wayPoints[0].coordinate) {
+  //     centerCoordinate = this.state.wayPoints[0].coordinate
+  //     this.setState({ ...this.state, centerCoordinate: centerCoordinate })
+  //   } else {
+  //     this.setState({ ...this.state, centerCoordinate: [-73.98330688476561, 40.76975180901395] })
+  //   }
+  // }
 
   render() {
-    let camera
-    let annotations
-    camera = (
-      <MapboxGL.Camera
-        zoomLevel={this.state.zoomLevel}
-        centerCoordinate={this.state.centerCoordinate}
-      />
-    )
-    if (this.state.wayPoints.length > 0) {
-      annotations = this.renderAnnotations()
-    }
+    let markers = this.renderAnnotations()
     return (
-      <View {...this.props} style={Style.container}>
-        <MapboxGL.MapView
-          ref={(c) => (this._map = c)}
-          onPress={(feature) => this.props.addMarker(feature)}
-          onDidFinishLoadingMap={this.onDidFinishLoadingMap}
-          style={Style.mapBoxContainer}
-        >
-          {camera}
-          {annotations}
-        </MapboxGL.MapView>
-        <MapControls
-          increaseZoom={() => this.increaseZoom()}
-          decreaseZoom={() => this.decreaseZoom()}
-          removeMarkers={() => this.props.purge()}
+      <View style={Style.container}>
+        <MapView
+          provider={PROVIDER_GOOGLE}
+          initialRegion={{
+            latitude: -73.98330688476561,
+            longitude: 40.76975180901395,
+            latitudeDelta: 0.8,
+            longitudeDelta: 0.8,
+          }}
         />
       </View>
     )
@@ -188,7 +172,10 @@ DestinationsMapScreen.propTypes = {
       title: PropTypes.string,
       subtitle: PropTypes.string,
       showCallout: PropTypes.showCallout,
-      coordinate: PropTypes.arrayOf(PropTypes.number),
+      location: PropTypes.shape({
+        latitude: PropTypes.number,
+        longitude: PropTypes.number,
+      }),
     })
   ),
   centerCoordinate: PropTypes.arrayOf(PropTypes.number),
@@ -214,6 +201,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   addMarker: (feature) => dispatch(DestinationActions.addMarker(feature)),
   purge: () => dispatch(DestinationActions.purge()),
+  reset: () => dispatch(DestinationActions.reset()),
 })
 
 export default connect(
