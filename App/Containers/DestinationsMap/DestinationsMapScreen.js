@@ -1,16 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, Animated, Image } from 'react-native'
+import { View, Animated, Image, Text } from 'react-native'
 import { connect } from 'react-redux'
 import Style from './DestinationsMapScreenStyle'
-import MapboxGL from '@react-native-mapbox-gl/maps'
+// import MapboxGL from '@react-native-mapbox-gl/maps'
 import CustomCallout from 'App/Components/CustomCallout/CustomCallout'
 import DestinationActions from 'App/Stores/DestinationsMap/Actions'
 import MapControls from 'App/Components/MapControls/MapControls'
-
-MapboxGL.setAccessToken(
-  'pk.eyJ1Ijoia2VsbHljcm93dGhlciIsImEiOiJjandmbWN0emIweDNmNDRrZHV3YzV0b3BqIn0.S-VaWf5_L6ZFUFWqZjglBQ'
-)
 
 class DestinationsMapScreen extends React.Component {
   constructor(props) {
@@ -149,31 +145,9 @@ class DestinationsMapScreen extends React.Component {
   render() {
     let camera
     let annotations
-    camera = (
-      <MapboxGL.Camera
-        zoomLevel={this.state.zoomLevel}
-        centerCoordinate={this.state.centerCoordinate}
-      />
-    )
-    if (this.state.wayPoints.length > 0) {
-      annotations = this.renderAnnotations()
-    }
     return (
       <View {...this.props} style={Style.container}>
-        <MapboxGL.MapView
-          ref={(c) => (this._map = c)}
-          onPress={(feature) => this.props.addMarker(feature)}
-          onDidFinishLoadingMap={this.onDidFinishLoadingMap}
-          style={Style.mapBoxContainer}
-        >
-          {camera}
-          {annotations}
-        </MapboxGL.MapView>
-        <MapControls
-          increaseZoom={() => this.increaseZoom()}
-          decreaseZoom={() => this.decreaseZoom()}
-          removeMarkers={() => this.props.purge()}
-        />
+        <Text>Hello, World</Text>
       </View>
     )
   }
