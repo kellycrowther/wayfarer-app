@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { View, Animated, Image } from 'react-native'
 import { connect } from 'react-redux'
 import Style from './DestinationsMapScreenStyle'
-import MapboxGL from '@react-native-mapbox-gl/maps'
+import MapboxGL from '@mapbox/react-native-mapbox-gl'
 import CustomCallout from 'App/Components/CustomCallout/CustomCallout'
 import DestinationActions from 'App/Stores/DestinationsMap/Actions'
 import MapControls from 'App/Components/MapControls/MapControls'
@@ -147,33 +147,16 @@ class DestinationsMapScreen extends React.Component {
   }
 
   render() {
-    let camera
     let annotations
-    camera = (
-      <MapboxGL.Camera
-        zoomLevel={this.state.zoomLevel}
-        centerCoordinate={this.state.centerCoordinate}
-      />
-    )
     if (this.state.wayPoints.length > 0) {
       annotations = this.renderAnnotations()
     }
     return (
       <View {...this.props} style={Style.container}>
-        <MapboxGL.MapView
-          ref={(c) => (this._map = c)}
-          onPress={(feature) => this.props.addMarker(feature)}
-          onDidFinishLoadingMap={this.onDidFinishLoadingMap}
-          style={Style.mapBoxContainer}
-        >
-          {camera}
+        <MapboxGL.MapView zoomLevel={1} style={Style.map}>
           {annotations}
+          <MapControls />
         </MapboxGL.MapView>
-        <MapControls
-          increaseZoom={() => this.increaseZoom()}
-          decreaseZoom={() => this.decreaseZoom()}
-          removeMarkers={() => this.props.purge()}
-        />
       </View>
     )
   }

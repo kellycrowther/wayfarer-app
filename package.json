@@ -12,6 +12,7 @@
     "rename": "react-native-rename"
   },
   "dependencies": {
+    "@mapbox/react-native-mapbox-gl": "https://github.com/nitaliano/react-native-mapbox-gl/tarball/master",
     "apisauce": "^1.0.2",
     "prop-types": "^15.7.2",
     "react": "16.8.3",
