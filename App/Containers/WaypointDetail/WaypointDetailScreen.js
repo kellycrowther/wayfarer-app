@@ -1,11 +1,18 @@
+/* eslint-disable react-native/no-color-literals */
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, Text } from 'react-native'
+import { View, Text, Dimensions } from 'react-native'
 import Style from './WaypointDetailScreenStyle'
 import { connect } from 'react-redux'
 import { Image } from 'react-native-elements'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { TabView, SceneMap } from 'react-native-tab-view'
+
+const FirstRoute = () => <View style={[Style.container, { backgroundColor: '#ff4081' }]} />
+
+const SecondRoute = () => <View style={[Style.container, { backgroundColor: '#673ab7' }]} />
 
 class WaypointDetailScreen extends React.Component {
   constructor(props) {
@@ -13,6 +20,8 @@ class WaypointDetailScreen extends React.Component {
 
     this.state = {
       ...this.props,
+      index: 0,
+      routes: [{ key: 'first', title: 'First' }, { key: 'second', title: 'Second' }],
     }
     console.info('STATE: ', this.state.photo)
   }
@@ -35,6 +44,15 @@ class WaypointDetailScreen extends React.Component {
             </TouchableOpacity>
           </View>
         </View>
+        <TabView
+          navigationState={this.state}
+          renderScene={SceneMap({
+            first: FirstRoute,
+            second: SecondRoute,
+          })}
+          onIndexChange={(index) => this.setState({ index })}
+          initialLayout={{ width: Dimensions.get('window').width }}
+        />
       </View>
     )
   }

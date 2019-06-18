@@ -8,6 +8,14 @@ export default StyleSheet.create({
   container: {
     ...ApplicationStyles.screen.container,
   },
+  hello: {
+    alignItems: 'center',
+    bottom: 0,
+    color: 'red',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
   heroImage: {
     alignSelf: 'stretch',
     height: 200,
