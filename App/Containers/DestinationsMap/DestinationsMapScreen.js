@@ -1,16 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, Animated, Image } from 'react-native'
+import { View, Animated, Image, Text } from 'react-native'
 import { connect } from 'react-redux'
 import Style from './DestinationsMapScreenStyle'
 import MapboxGL from '@mapbox/react-native-mapbox-gl'
 import CustomCallout from 'App/Components/CustomCallout/CustomCallout'
 import DestinationActions from 'App/Stores/DestinationsMap/Actions'
 import MapControls from 'App/Components/MapControls/MapControls'
-
-MapboxGL.setAccessToken(
-  'pk.eyJ1Ijoia2VsbHljcm93dGhlciIsImEiOiJjandmbWN0emIweDNmNDRrZHV3YzV0b3BqIn0.S-VaWf5_L6ZFUFWqZjglBQ'
-)
 
 class DestinationsMapScreen extends React.Component {
   constructor(props) {
