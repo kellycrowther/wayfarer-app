@@ -10,8 +10,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { TabView, SceneMap } from 'react-native-tab-view'
 import WaypointDetail from 'App/Components/WaypointDetail/WaypointDetail'
-
-const SecondRoute = () => <View style={[Style.container, { backgroundColor: '#673ab7' }]} />
+import EventsList from 'App/Components/EventsList/EventsList'
 
 class WaypointDetailScreen extends React.Component {
   constructor(props) {
@@ -47,7 +46,7 @@ class WaypointDetailScreen extends React.Component {
           navigationState={this.state}
           renderScene={SceneMap({
             first: WaypointDetail,
-            second: SecondRoute,
+            second: EventsList,
           })}
           onIndexChange={(index) => this.setState({ index })}
           initialLayout={{ width: Dimensions.get('window').width }}

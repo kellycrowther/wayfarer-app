@@ -1,4 +1,5 @@
 import { createAppContainer, createStackNavigator } from 'react-navigation'
+import Colors from 'App/Theme/Colors'
 
 import ExampleScreen from 'App/Containers/Example/ExampleScreen'
 import SplashScreen from 'App/Containers/SplashScreen/SplashScreen'
@@ -24,7 +25,7 @@ const StackNavigator = createStackNavigator(
       navigationOptions: {
         title: 'Destinations',
         headerStyle: {
-          backgroundColor: '#f4511e',
+          backgroundColor: Colors.secondary,
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -37,7 +38,7 @@ const StackNavigator = createStackNavigator(
       navigationOptions: {
         title: 'Example Screen',
         headerStyle: {
-          backgroundColor: '#f4511e',
+          backgroundColor: Colors.secondary,
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -50,7 +51,7 @@ const StackNavigator = createStackNavigator(
       navigationOptions: {
         title: 'Login',
         headerStyle: {
-          backgroundColor: '#f4511e',
+          backgroundColor: Colors.secondary,
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -63,7 +64,7 @@ const StackNavigator = createStackNavigator(
       navigationOptions: {
         title: 'Register',
         headerStyle: {
-          backgroundColor: '#f4511e',
+          backgroundColor: Colors.secondary,
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -76,7 +77,7 @@ const StackNavigator = createStackNavigator(
       navigationOptions: {
         title: 'Register',
         headerStyle: {
-          backgroundColor: '#f4511e',
+          backgroundColor: Colors.secondary,
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -89,7 +90,7 @@ const StackNavigator = createStackNavigator(
       navigationOptions: {
         title: 'Waypoint',
         headerStyle: {
-          backgroundColor: '#f4511e',
+          backgroundColor: Colors.secondary,
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
