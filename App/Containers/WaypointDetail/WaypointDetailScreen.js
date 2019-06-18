@@ -9,8 +9,7 @@ import { Image } from 'react-native-elements'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { TabView, SceneMap } from 'react-native-tab-view'
-
-const FirstRoute = () => <View style={[Style.container, { backgroundColor: '#ff4081' }]} />
+import WaypointDetail from 'App/Components/WaypointDetail/WaypointDetail'
 
 const SecondRoute = () => <View style={[Style.container, { backgroundColor: '#673ab7' }]} />
 
@@ -47,7 +46,7 @@ class WaypointDetailScreen extends React.Component {
         <TabView
           navigationState={this.state}
           renderScene={SceneMap({
-            first: FirstRoute,
+            first: WaypointDetail,
             second: SecondRoute,
           })}
           onIndexChange={(index) => this.setState({ index })}
