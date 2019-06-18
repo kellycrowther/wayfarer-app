@@ -153,10 +153,18 @@ class DestinationsMapScreen extends React.Component {
     }
     return (
       <View {...this.props} style={Style.container}>
-        <MapboxGL.MapView zoomLevel={1} style={Style.map}>
+        <MapboxGL.MapView
+          centerCoordinate={this.state.centerCoordinate}
+          zoomLevel={this.state.zoomLevel}
+          style={Style.map}
+        >
           {annotations}
-          <MapControls />
         </MapboxGL.MapView>
+        <MapControls
+          increaseZoom={() => this.increaseZoom()}
+          decreaseZoom={() => this.decreaseZoom()}
+          removeMarkers={() => this.props.purge()}
+        />
       </View>
     )
   }
