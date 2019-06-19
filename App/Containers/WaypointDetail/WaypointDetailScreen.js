@@ -19,7 +19,11 @@ class WaypointDetailScreen extends React.Component {
     this.state = {
       ...this.props,
       index: 0,
-      routes: [{ key: 'about', title: 'About' }, { key: 'second', title: 'Second' }],
+      routes: [
+        { key: 'about', title: 'About' },
+        { key: 'events', title: 'Events' },
+        { key: 'guestBook', title: 'Guest Book' },
+      ],
     }
     console.info('STATE: ', this.state.photo)
   }
@@ -52,8 +56,10 @@ class WaypointDetailScreen extends React.Component {
             switch (route.key) {
               case 'about':
                 return <WaypointDetail waypointDetail={this.state} />
-              case 'second':
-                return <EventsList />
+              case 'events':
+                return <EventsList events={this.state.events} />
+              case 'guestBook':
+                return null
             }
           }}
           onIndexChange={(index) => this.setState({ index })}
@@ -85,6 +91,7 @@ WaypointDetailScreen.propTypes = {
       name: PropTypes.string,
       description: PropTypes.string,
       time: PropTypes.string,
+      photo: PropTypes.string,
     })
   ),
   id: PropTypes.number,
