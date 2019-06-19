@@ -7,6 +7,7 @@ import MapboxGL from '@mapbox/react-native-mapbox-gl'
 import CustomCallout from 'App/Components/CustomCallout/CustomCallout'
 import DestinationActions from 'App/Stores/DestinationsMap/Actions'
 import MapControls from 'App/Components/MapControls/MapControls'
+import { WaypointProps } from 'App/Models/WaypointModels'
 
 MapboxGL.setAccessToken(
   'pk.eyJ1Ijoia2VsbHljcm93dGhlciIsImEiOiJjandmbWN0emIweDNmNDRrZHV3YzV0b3BqIn0.S-VaWf5_L6ZFUFWqZjglBQ'
@@ -174,14 +175,7 @@ DestinationsMapScreen.propTypes = {
   activeAnnotationIndex: PropTypes.number,
   previousActiveAnnotationIndex: PropTypes.number,
   backgroundColor: PropTypes.string,
-  wayPoints: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string,
-      subtitle: PropTypes.string,
-      showCallout: PropTypes.showCallout,
-      coordinate: PropTypes.arrayOf(PropTypes.number),
-    })
-  ),
+  wayPoints: PropTypes.arrayOf(WaypointProps),
   centerCoordinate: PropTypes.arrayOf(PropTypes.number),
   zoomLevel: PropTypes.number,
   id: PropTypes.number,
