@@ -65,9 +65,6 @@ WaypointDetail.propTypes = {
       })
     ),
     id: PropTypes.number,
-    navigation: PropTypes.shape({
-      navigate: PropTypes.func.isRequired,
-    }).isRequired,
   }),
 }
 

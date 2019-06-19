@@ -37,8 +37,8 @@ class WaypointDetailScreen extends React.Component {
     return (
       <View style={Style.container}>
         <View>
-          <Text style={Style.title}>{this.state.title}</Text>
-          <Image source={{ uri: this.state.photo }} style={Style.heroImage} />
+          <Text style={Style.title}>{this.state.waypoint.title}</Text>
+          <Image source={{ uri: this.state.waypoint.photo }} style={Style.heroImage} />
           <View style={Style.likeContainer}>
             <TouchableOpacity style={Style.likeButton}>
               <FontAwesome name="heart" style={Style.likeIcon} />
@@ -46,7 +46,7 @@ class WaypointDetailScreen extends React.Component {
           </View>
           <View style={Style.ratingContainer}>
             <FontAwesome name="star" style={Style.ratingIcon} />
-            <Text style={Style.ratingText}>{this.state.rating}</Text>
+            <Text style={Style.ratingText}>{this.state.waypoint.rating}</Text>
           </View>
         </View>
         <TabView
@@ -54,11 +54,11 @@ class WaypointDetailScreen extends React.Component {
           renderScene={({ route }) => {
             switch (route.key) {
               case 'about':
-                return <WaypointDetail waypointDetail={this.state} />
+                return <WaypointDetail waypointDetail={this.state.waypoint} />
               case 'events':
-                return <EventsList events={this.state.events} />
+                return <EventsList events={this.state.waypoint.events} />
               case 'guestBook':
-                return <GuestBookList />
+                return <GuestBookList guestBooks={this.state.guestBooks} />
             }
           }}
           onIndexChange={(index) => this.setState({ index })}
@@ -70,37 +70,56 @@ class WaypointDetailScreen extends React.Component {
 }
 
 WaypointDetailScreen.propTypes = {
-  detailScreenIsLoading: PropTypes.bool,
-  detailScreenErrorMessage: PropTypes.string,
-  title: PropTypes.string,
-  subtitle: PropTypes.string,
-  description: PropTypes.string,
-  rating: PropTypes.number,
-  favorite: PropTypes.number,
-  type: PropTypes.string,
-  photo: PropTypes.string,
-  activities: PropTypes.arrayOf(PropTypes.string),
-  address: PropTypes.string,
-  city: PropTypes.string,
-  state: PropTypes.string,
-  zipCode: PropTypes.number,
-  price: PropTypes.number,
-  events: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      description: PropTypes.string,
-      time: PropTypes.string,
-      photo: PropTypes.string,
-    })
-  ),
-  id: PropTypes.number,
+  waypoint: PropTypes.shape({
+    detailScreenIsLoading: PropTypes.bool,
+    detailScreenErrorMessage: PropTypes.string,
+    title: PropTypes.string,
+    subtitle: PropTypes.string,
+    description: PropTypes.string,
+    rating: PropTypes.number,
+    favorite: PropTypes.number,
+    type: PropTypes.string,
+    photo: PropTypes.string,
+    activities: PropTypes.arrayOf(PropTypes.string),
+    address: PropTypes.string,
+    city: PropTypes.string,
+    state: PropTypes.string,
+    zipCode: PropTypes.number,
+    price: PropTypes.number,
+    events: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        description: PropTypes.string,
+        time: PropTypes.string,
+        photo: PropTypes.string,
+      })
+    ),
+    id: PropTypes.number,
+  }),
+  guestBooks: PropTypes.shape({
+    guestBookIsLoading: PropTypes.bool,
+    guestBookErrorMessage: PropTypes.string,
+    entries: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string,
+        subtitle: PropTypes.string,
+        description: PropTypes.string,
+        like: PropTypes.number,
+        coverPhoto: PropTypes.string,
+        photos: PropTypes.arrayOf(PropTypes.string),
+        locationID: PropTypes.number,
+        id: PropTypes.number,
+      })
+    ),
+  }),
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
 }
 
-const mapStateToProps = (state) => {
-  return state.waypoint
-}
+const mapStateToProps = (state) => ({
+  waypoint: state.waypoint,
+  guestBooks: state.guestBooks,
+})
 
 export default connect(mapStateToProps)(WaypointDetailScreen)

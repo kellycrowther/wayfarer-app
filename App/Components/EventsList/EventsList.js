@@ -6,6 +6,10 @@ import { Card, Button } from 'react-native-elements'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 class EventsList extends React.PureComponent {
+  constructor() {
+    super()
+    console.info('~EventsList')
+  }
   render() {
     return (
       <ScrollView style={Style.container}>

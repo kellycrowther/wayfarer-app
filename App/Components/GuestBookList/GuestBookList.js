@@ -5,6 +5,14 @@ import Style from './GuestBookListStyle'
 import { Card, ListItem } from 'react-native-elements'
 
 class GuestBookList extends React.PureComponent {
+  constructor(props) {
+    super(props)
+    console.info('~GuestBookList->props', props)
+    this.state = {
+      ...this.props,
+    }
+  }
+
   render() {
     return (
       <ScrollView style={Style.container}>
