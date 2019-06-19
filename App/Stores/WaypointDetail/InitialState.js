@@ -15,6 +15,7 @@ export const INITIAL_STATE = {
   activities: ['Food', 'Restroom', 'Sightseeing', 'Hiking', 'Photography', 'Nightlife'],
   address: 'Somewhere in New York City',
   city: 'New York',
+  state: 'NY',
   zipCode: 99999,
   price: 3,
   events: [

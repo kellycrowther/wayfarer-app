@@ -8,14 +8,6 @@ export default StyleSheet.create({
   container: {
     ...ApplicationStyles.screen.container,
   },
-  hello: {
-    alignItems: 'center',
-    bottom: 0,
-    color: 'red',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
   heroImage: {
     alignSelf: 'stretch',
     height: 200,
@@ -30,12 +22,31 @@ export default StyleSheet.create({
     width: 40,
   },
   likeContainer: {
-    bottom: 10,
     position: 'absolute',
     right: 0,
+    top: 10,
     zIndex: 99,
   },
-  likeIcon: {},
+  likeIcon: {
+    color: Colors.error,
+    fontSize: 18,
+  },
+  ratingContainer: {
+    bottom: 20,
+    display: 'flex',
+    flexDirection: 'row',
+    position: 'absolute',
+    right: 10,
+    zIndex: 99,
+  },
+  ratingIcon: {
+    color: Colors.quinary,
+    fontSize: 18,
+  },
+  ratingText: {
+    color: Colors.quinary,
+    marginLeft: 5,
+  },
   title: {
     ...Fonts.style.h2,
     ...Fonts.textShadow,

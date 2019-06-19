@@ -24,4 +24,10 @@ export default {
     marginRight: 5,
     marginTop: 10,
   },
+  icon: {
+    alignItems: 'center',
+    flexDirection: 'column',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
 }
