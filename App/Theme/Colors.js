@@ -12,6 +12,7 @@ export default {
   primary: '#40E0D0',
   secondary: '#f4511e',
   tertiary: '#673ab7',
+  quaternary: '#99328B',
   quinary: 'gold',
   success: '#28a745',
   error: '#dc3545',

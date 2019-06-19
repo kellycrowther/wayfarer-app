@@ -1,5 +1,3 @@
-/* eslint-disable react-native/no-color-literals */
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { View, Text, Dimensions } from 'react-native'
@@ -11,6 +9,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { TabView } from 'react-native-tab-view'
 import WaypointDetail from 'App/Components/WaypointDetail/WaypointDetail'
 import EventsList from 'App/Components/EventsList/EventsList'
+import GuestBookList from 'App/Components/GuestBookList/GuestBookList'
 
 class WaypointDetailScreen extends React.Component {
   constructor(props) {
@@ -59,7 +58,7 @@ class WaypointDetailScreen extends React.Component {
               case 'events':
                 return <EventsList events={this.state.events} />
               case 'guestBook':
-                return null
+                return <GuestBookList />
             }
           }}
           onIndexChange={(index) => this.setState({ index })}

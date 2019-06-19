@@ -26,12 +26,14 @@ class EventsList extends React.PureComponent {
 }
 
 EventsList.propTypes = {
-  events: PropTypes.shape({
-    name: PropTypes.string,
-    description: PropTypes.string,
-    time: PropTypes.string,
-    photo: PropTypes.string,
-  }),
+  events: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      description: PropTypes.string,
+      time: PropTypes.string,
+      photo: PropTypes.string,
+    })
+  ),
 }
 
 export default EventsList
