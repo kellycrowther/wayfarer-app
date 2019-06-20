@@ -10,10 +10,6 @@ export default StyleSheet.create({
     marginLeft: 0,
     marginRight: 0,
   },
-  buttonIcon: {
-    color: Colors.shade100,
-    marginRight: 10,
-  },
   container: {
     ...ApplicationStyles.screen.container,
     backgroundColor: Colors.quaternary,
@@ -21,5 +17,14 @@ export default StyleSheet.create({
   },
   description: {
     marginBottom: 10,
+  },
+  likeComponent: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  likeIcon: {
+    color: Colors.shade0,
+    marginLeft: 5,
   },
 })

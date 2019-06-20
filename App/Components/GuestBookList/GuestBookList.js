@@ -1,8 +1,18 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { ScrollView } from 'react-native'
+import { ScrollView, View, Text } from 'react-native'
 import Style from './GuestBookListStyle'
 import { Card, ListItem } from 'react-native-elements'
+import { GuestBooksProps } from 'App/Models/GuestBookModels'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+
+const LikesComponent = (likes) => {
+  return (
+    <View style={Style.likeComponent}>
+      <Text>{likes}</Text>
+      <FontAwesome name="thumbs-up" style={Style.likeIcon} />
+    </View>
+  )
+}
 
 class GuestBookList extends React.PureComponent {
   constructor(props) {
@@ -13,29 +23,32 @@ class GuestBookList extends React.PureComponent {
     }
   }
 
+  renderEntries(props) {
+    const entries = props.entries
+    const entriesList = entries.map((entry, x) => (
+      <Card key={x}>
+        <ListItem
+          roundAvatar
+          title={entry.title}
+          subtitle={entry.subtitle}
+          subtitleProps={{ numberOfLines: 2 }}
+          leftAvatar={{ source: { uri: 'https://picsum.photos/200/300' } }}
+          rightIcon={LikesComponent(entry.likes)}
+          chevron
+        />
+      </Card>
+    ))
+    return entriesList
+  }
+
   render() {
-    return (
-      <ScrollView style={Style.container}>
-        <Card>
-          <ListItem
-            roundAvatar
-            title="Hello, World"
-            leftAvatar={{ source: { uri: 'https://picsum.photos/200/300' } }}
-            rightIcon={{ name: 'chevron-right' }}
-          />
-        </Card>
-      </ScrollView>
-    )
+    let entries = this.renderEntries(this.state.guestBooks)
+    return <ScrollView style={Style.container}>{entries}</ScrollView>
   }
 }
 
 GuestBookList.propTypes = {
-  events: PropTypes.shape({
-    name: PropTypes.string,
-    description: PropTypes.string,
-    time: PropTypes.string,
-    photo: PropTypes.string,
-  }),
+  guestBooks: GuestBooksProps,
 }
 
 export default GuestBookList
