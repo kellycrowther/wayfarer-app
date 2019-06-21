@@ -4,6 +4,7 @@ import Style from './GuestBookListStyle'
 import { Card, ListItem } from 'react-native-elements'
 import { GuestBooksProps } from 'App/Models/GuestBookModels'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler'
 
 const LikesComponent = (likes) => {
   return (
@@ -26,17 +27,20 @@ class GuestBookList extends React.PureComponent {
   renderEntries(props) {
     const entries = props.entries
     const entriesList = entries.map((entry, x) => (
-      <Card key={x}>
-        <ListItem
-          roundAvatar
-          title={entry.title}
-          subtitle={entry.subtitle}
-          subtitleProps={{ numberOfLines: 2 }}
-          leftAvatar={{ source: { uri: 'https://picsum.photos/200/300' } }}
-          rightIcon={LikesComponent(entry.likes)}
-          chevron
-        />
-      </Card>
+      <TouchableOpacity activeOpacity={0.66} key={x}>
+        <Card>
+          <ListItem
+            roundAvatar
+            title={entry.title}
+            subtitle={entry.subtitle}
+            subtitleStyle={Style.subtitle}
+            subtitleProps={{ numberOfLines: 2 }}
+            leftAvatar={{ source: { uri: 'https://picsum.photos/200/300' } }}
+            rightIcon={LikesComponent(entry.likes)}
+            chevron
+          />
+        </Card>
+      </TouchableOpacity>
     ))
     return entriesList
   }

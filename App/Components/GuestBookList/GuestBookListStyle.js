@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native'
 import Colors from 'App/Theme/Colors'
 import ApplicationStyles from 'App/Theme/ApplicationStyles'
+import Fonts from '../../Theme/Fonts'
 
 export default StyleSheet.create({
   button: {
@@ -26,5 +27,9 @@ export default StyleSheet.create({
   likeIcon: {
     color: Colors.shade0,
     marginLeft: 5,
+  },
+  subtitle: {
+    color: Colors.shade40,
+    fontSize: Fonts.size.small,
   },
 })
