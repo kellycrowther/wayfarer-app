@@ -10,8 +10,8 @@ import { PropTypes } from 'prop-types'
 class RootScreen extends Component {
   componentDidMount() {
     // Run the startup saga when the application is starting
-    const isToken = this.props.user.token
-    this.props.startup(isToken)
+    this.props.startup(this.props.token.key)
+    console.info('PROPS: ', this.props)
   }
 
   render() {
@@ -30,19 +30,19 @@ class RootScreen extends Component {
 
 RootScreen.propTypes = {
   startup: PropTypes.func,
-  user: PropTypes.shape({
-    token: PropTypes.shape({
-      key: PropTypes.string,
-    }),
+  username: PropTypes.string,
+  token: PropTypes.shape({
+    key: PropTypes.string,
   }),
 }
 
 const mapStateToProps = (state) => ({
-  user: state.login.user,
+  username: state.auth.username,
+  token: state.auth.token,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  startup: (isToken) => dispatch(StartupActions.startup(isToken)),
+  startup: (token) => dispatch(StartupActions.startup(token)),
 })
 
 export default connect(

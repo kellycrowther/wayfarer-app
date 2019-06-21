@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Button, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
-import LoginActions from 'App/Stores/Login/Actions'
+import AuthActions from 'App/Stores/Auth/Actions'
 import Style from './LoginScreenStyle'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { TextInput } from 'react-native-gesture-handler'
@@ -33,7 +33,7 @@ class LoginScreen extends React.Component {
   }
 
   handleSubmit() {
-    this.props.login(this.state)
+    this.props.login(this.state.username, this.state.password)
   }
 
   render() {
@@ -65,6 +65,7 @@ class LoginScreen extends React.Component {
               onPress={() => this.props.navigation.navigate('RegisterScreen')}
               title="Register"
             />
+            <Button onPress={() => this.props.logout()} title="Logout" />
           </View>
         )}
       </View>
@@ -73,10 +74,12 @@ class LoginScreen extends React.Component {
 }
 
 LoginScreen.propTypes = {
-  user: PropTypes.object,
+  username: PropTypes.string,
+  password: PropTypes.string,
   userIsLoading: PropTypes.bool,
   userErrorMessage: PropTypes.string,
   login: PropTypes.func,
+  logout: PropTypes.func,
   liveInEurope: PropTypes.bool,
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
@@ -84,13 +87,14 @@ LoginScreen.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.login.user,
-  userIsLoading: state.login.userIsLoading,
-  userErrorMessage: state.login.userErrorMessage,
+  username: state.auth.username,
+  userIsLoading: state.auth.userIsLoading,
+  userErrorMessage: state.auth.userErrorMessage,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (credentials) => dispatch(LoginActions.login(credentials)),
+  login: (username, password) => dispatch(AuthActions.login(username, password)),
+  logout: () => dispatch(AuthActions.logout()),
 })
 
 export default connect(

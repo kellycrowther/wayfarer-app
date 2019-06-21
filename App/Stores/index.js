@@ -8,6 +8,7 @@ import { reducer as DestinationsMapReducer } from './DestinationsMap/Reducers'
 import { reducer as WaypointReducer } from './WaypointDetail/Reducers'
 import { reducer as GuestBookReducer } from './GuestBook/Reducers'
 import { reducer as EventsReducer } from './Events/Reducers'
+import { reducer as AuthReducer } from './Auth/Reducers'
 
 export default () => {
   const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ export default () => {
     example: ExampleReducer,
     login: LoginReducer,
     register: RegisterReducer,
+    auth: AuthReducer,
     destination: DestinationsMapReducer,
     waypoint: WaypointReducer,
     guestBooks: GuestBookReducer,
