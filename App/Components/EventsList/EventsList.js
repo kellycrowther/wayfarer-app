@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, Text } from 'react-native'
+import { ScrollView, Text, View } from 'react-native'
 import Style from './EventsListStyle'
 import { Card, Button } from 'react-native-elements'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -10,20 +10,31 @@ class EventsList extends React.PureComponent {
     super(props)
     console.info('~EventsList', props)
   }
+
+  renderEvents(props) {
+    const events = props.events
+    const eventsList = events.map((event, x) => (
+      <Card key={x} title={event.name} image={{ uri: event.photo }}>
+        <View style={Style.dateTimeContainer}>
+          <Text>Date/Time:</Text>
+          <Text style={Style.subtitle}>{event.time}</Text>
+        </View>
+        <Text style={Style.description}>{event.description}</Text>
+        <Button
+          icon={<FontAwesome name="calendar" style={Style.buttonIcon} />}
+          style={Style.button}
+          title="VIEW NOW"
+        />
+      </Card>
+    ))
+    return eventsList
+  }
+
   render() {
+    const entries = this.renderEvents(this.props.eventsPage)
     return (
-      <ScrollView style={Style.container}>
-        <Card title="HELLO WORLD" image={{ uri: this.props.eventsPage.events[0].photo }}>
-          <Text style={Style.description}>
-            The idea with React Native Elements is more about component structure than actual
-            design.
-          </Text>
-          <Button
-            icon={<FontAwesome name="calendar" style={Style.buttonIcon} />}
-            style={Style.button}
-            title="VIEW NOW"
-          />
-        </Card>
+      <ScrollView contentContainerStyle={Style.scrollContainer} style={Style.container}>
+        {entries}
       </ScrollView>
     )
   }
