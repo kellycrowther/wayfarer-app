@@ -10,8 +10,8 @@ import { GuestBookTypes } from './Actions'
 
 export const fetchGuestBookSuccess = (state, { user }) => ({
   ...state,
-  mapIsLoading: false,
-  mapErrorMessage: null,
+  guestBookIsLoading: false,
+  guestBookErrorMessage: null,
 })
 
 export const fetchGuestBookFailure = (state, { errorMessage }) => ({

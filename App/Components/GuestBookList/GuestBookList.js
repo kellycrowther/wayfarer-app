@@ -4,7 +4,7 @@ import Style from './GuestBookListStyle'
 import { Card, ListItem } from 'react-native-elements'
 import { GuestBooksProps } from 'App/Models/GuestBookModels'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const LikesComponent = (likes) => {
   return (

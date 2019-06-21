@@ -7,6 +7,7 @@ import { reducer as RegisterReducer } from './Register/Reducers'
 import { reducer as DestinationsMapReducer } from './DestinationsMap/Reducers'
 import { reducer as WaypointReducer } from './WaypointDetail/Reducers'
 import { reducer as GuestBookReducer } from './GuestBook/Reducers'
+import { reducer as EventsReducer } from './Events/Reducers'
 
 export default () => {
   const rootReducer = combineReducers({
@@ -20,6 +21,7 @@ export default () => {
     destination: DestinationsMapReducer,
     waypoint: WaypointReducer,
     guestBooks: GuestBookReducer,
+    events: EventsReducer,
   })
 
   return configureStore(rootReducer, rootSaga)

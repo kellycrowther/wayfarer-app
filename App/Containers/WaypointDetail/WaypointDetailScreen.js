@@ -12,6 +12,7 @@ import EventsList from 'App/Components/EventsList/EventsList'
 import GuestBookList from 'App/Components/GuestBookList/GuestBookList'
 import { GuestBooksProps } from 'App/Models/GuestBookModels'
 import { WaypointProps } from 'App/Models/WaypointModels'
+import { EventsPageProps } from 'App/Models/EventsModels'
 
 class WaypointDetailScreen extends React.Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class WaypointDetailScreen extends React.Component {
         { key: 'guestBook', title: 'Guest Book' },
       ],
     }
-    console.info('STATE: ', this.state.photo)
+    console.info('~WaypointDetailScreen->state', this.state)
   }
 
   componentDidMount() {
@@ -58,7 +59,7 @@ class WaypointDetailScreen extends React.Component {
               case 'about':
                 return <WaypointDetail waypointDetail={this.state.waypoint} />
               case 'events':
-                return <EventsList events={this.state.waypoint.events} />
+                return <EventsList eventsPage={this.state.eventsPage} />
               case 'guestBook':
                 return <GuestBookList guestBooks={this.state.guestBooks} />
             }
@@ -74,6 +75,7 @@ class WaypointDetailScreen extends React.Component {
 WaypointDetailScreen.propTypes = {
   waypoint: WaypointProps,
   guestBooks: GuestBooksProps,
+  eventsPage: EventsPageProps,
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
@@ -82,6 +84,7 @@ WaypointDetailScreen.propTypes = {
 const mapStateToProps = (state) => ({
   waypoint: state.waypoint,
   guestBooks: state.guestBooks,
+  eventsPage: state.events,
 })
 
 export default connect(mapStateToProps)(WaypointDetailScreen)
