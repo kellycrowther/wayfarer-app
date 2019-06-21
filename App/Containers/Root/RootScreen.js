@@ -10,8 +10,8 @@ import { PropTypes } from 'prop-types'
 class RootScreen extends Component {
   componentDidMount() {
     // Run the startup saga when the application is starting
-    this.props.startup(this.props.token.key)
     console.info('PROPS: ', this.props)
+    this.props.startup(this.props.token.key)
   }
 
   render() {

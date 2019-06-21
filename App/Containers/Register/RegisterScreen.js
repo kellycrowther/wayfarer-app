@@ -3,7 +3,7 @@ import { View, Image, Text, Button } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import Style from './RegisterScreenStyle'
-import RegisterActions from '../../Stores/Register/Actions'
+import AuthActions from '../../Stores/Auth/Actions'
 import { TextInput } from 'react-native-gesture-handler'
 
 class RegisterScreen extends React.Component {
@@ -105,9 +105,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchConfirmUser: (username) => dispatch(RegisterActions.confirmUserSignUp(username)),
+  dispatchConfirmUser: (username) => dispatch(AuthActions.confirmUserSignUp(username)),
   createUser: (username, password, email, phoneNumber) =>
-    dispatch(RegisterActions.createUser(username, password, email, phoneNumber)),
+    dispatch(AuthActions.createUser(username, password, email, phoneNumber)),
 })
 
 export default connect(

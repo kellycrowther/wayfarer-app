@@ -25,14 +25,14 @@ export function* login(credentials) {
   }
 }
 
-export function* createUser(username, password, email) {
-  console.info('AuthSage->createUser', username)
+export function* createUser(newUserData) {
+  console.info('AuthSage->createUser', newUserData)
   yield put(AuthActions.fetchUserLoading())
 
   // Fetch user information from an API
-  const token = yield call(userService.createUser, username, password, email)
+  const token = yield call(userService.createUser, newUserData)
   if (token) {
-    yield put(AuthActions.fetchUserSuccess(username, token))
+    yield put(AuthActions.fetchUserSuccess(newUserData.username, token))
     NavigationService.navigateAndReset('MainScreen')
   } else {
     yield put(AuthActions.fetchUserFailure('There was an error while fetching user informations.'))
