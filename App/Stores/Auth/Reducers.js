@@ -15,7 +15,7 @@ export const fetchUserSuccess = (state, action) => ({
   email: '',
   phoneNumber: '',
   token: {
-    key: action.token,
+    key: action.token.key,
   },
   userIsLoading: false,
   userErrorMessage: null,
