@@ -20,7 +20,7 @@ import { createActions } from 'reduxsauce'
  */
 const { Types, Creators } = createActions({
   // Get Map
-  getMap: null,
+  getAllWaypoints: null,
   // Add A Marker to the map
   addMarker: ['feature'],
   // Clear Marker State

@@ -5,7 +5,7 @@ import { DestinationsMapTypes } from 'App/Stores/DestinationsMap/Actions'
 import { AuthTypes } from 'App/Stores/Auth/Actions'
 import { fetchUser } from './ExampleSaga'
 import { startup } from './StartupSaga'
-import { getMap } from './DestinationMapSaga'
+import { getAllWaypoints } from './DestinationMapSaga'
 import { login, createUser } from './AuthSaga'
 
 export default function* root() {
@@ -19,6 +19,6 @@ export default function* root() {
     takeLatest(ExampleTypes.FETCH_USER, fetchUser),
     takeLatest(AuthTypes.LOGIN, login),
     takeLatest(AuthTypes.CREATE_USER, createUser),
-    takeLatest(DestinationsMapTypes.GET_MAP, getMap),
+    takeLatest(DestinationsMapTypes.GET_ALL_WAYPOINTS, getAllWaypoints),
   ])
 }

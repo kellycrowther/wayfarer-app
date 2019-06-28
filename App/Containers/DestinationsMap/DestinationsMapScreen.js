@@ -30,6 +30,10 @@ class DestinationsMapScreen extends React.Component {
     this.determineCenterCoordinate()
   }
 
+  componentDidMount() {
+    this.props.getAllWaypoints()
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.state.wayPoints !== nextProps.wayPoints) {
       this.setState({
@@ -181,6 +185,7 @@ DestinationsMapScreen.propTypes = {
   id: PropTypes.number,
   addMarker: PropTypes.func,
   purge: PropTypes.func,
+  getAllWaypoints: PropTypes.func,
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
@@ -199,6 +204,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   addMarker: (feature) => dispatch(DestinationActions.addMarker(feature)),
   purge: () => dispatch(DestinationActions.purge()),
+  getAllWaypoints: () => dispatch(DestinationActions.getAllWaypoints()),
 })
 
 export default connect(
