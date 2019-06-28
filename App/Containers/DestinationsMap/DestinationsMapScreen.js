@@ -105,7 +105,10 @@ class DestinationsMapScreen extends React.Component {
     }
 
     for (let i = 0; i < this.state.wayPoints.length; i++) {
-      const coordinate = this.state.wayPoints[i].coordinate
+      const coordinate = [
+        this.state.wayPoints[i].coordinate.latitude,
+        this.state.wayPoints[i].coordinate.longitude,
+      ]
       const wayPoint = this.state.wayPoints[i]
 
       const id = `pointAnnotation${i}`
@@ -144,7 +147,10 @@ class DestinationsMapScreen extends React.Component {
   determineCenterCoordinate() {
     let centerCoordinate
     if (this.state.wayPoints && this.state.wayPoints[0] && this.state.wayPoints[0].coordinate) {
-      centerCoordinate = this.state.wayPoints[0].coordinate
+      centerCoordinate = [
+        this.state.wayPoints[0].coordinate.latitude,
+        this.state.wayPoints[0].coordinate.longitude,
+      ]
       this.setState({ ...this.state, centerCoordinate: centerCoordinate })
     } else {
       this.setState({ ...this.state, centerCoordinate: [-73.98330688476561, 40.76975180901395] })

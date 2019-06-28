@@ -6,7 +6,7 @@ export function* getAllWaypoints() {
   const waypoints = yield call(waypointService.getAllWaypoints)
   console.info('WaypointSaga->getWaypoints()', waypoints)
   if (waypoints) {
-    yield put(DestinationsMapActions.fetchMapSuccess())
+    yield put(DestinationsMapActions.fetchMapSuccess(waypoints))
   } else {
     yield put(
       DestinationsMapActions.fetchMapFailure('There was an error while fetching user informations.')

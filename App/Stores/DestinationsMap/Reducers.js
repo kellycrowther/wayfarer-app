@@ -8,8 +8,9 @@ import { INITIAL_STATE } from './InitialState'
 import { createReducer } from 'reduxsauce'
 import { DestinationsMapTypes } from './Actions'
 
-export const fetchMapSuccess = (state, { user }) => ({
+export const fetchMapSuccess = (state, { waypoints }) => ({
   ...state,
+  wayPoints: waypoints,
   mapIsLoading: false,
   mapErrorMessage: null,
 })

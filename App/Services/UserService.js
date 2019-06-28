@@ -53,10 +53,10 @@ function fetchUser() {
 
 function login(credentials) {
   const formData = new FormData()
-  formData.append('username', credentials.username)
-  formData.append('password', credentials.password)
-  // formData.append('username', 'hustle')
-  // formData.append('password', 'wayfarerapi')
+  // formData.append('username', credentials.username)
+  // formData.append('password', credentials.password)
+  formData.append('username', 'hustle')
+  formData.append('password', 'wayfarerapi')
   return wayfarerApiClient.post('rest-auth/login/', formData).then((response) => {
     console.info('UserService->login->response', response)
     if (response.ok) {

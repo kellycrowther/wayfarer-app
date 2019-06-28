@@ -25,7 +25,7 @@ const { Types, Creators } = createActions({
   addMarker: ['feature'],
   // Clear Marker State
   purge: null,
-  fetchMapSuccess: null,
+  fetchMapSuccess: ['waypoints'],
   fetchMapFailure: null,
 })
 
