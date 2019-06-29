@@ -7,6 +7,9 @@ import LoginScreen from '../Containers/Login/LoginScreen'
 import RegisterScreen from '../Containers/Register/RegisterScreen'
 import DestinationsMapScreen from '../Containers/DestinationsMap/DestinationsMapScreen'
 import WaypointDetailScreen from 'App/Containers/WaypointDetail/WaypointDetailScreen'
+import { View, TouchableOpacity } from 'react-native'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import React from 'react'
 
 /**
  * The root screen contains the application's navigation.
@@ -22,16 +25,21 @@ const StackNavigator = createStackNavigator(
     // own screen and remove the example.
     MainScreen: {
       screen: DestinationsMapScreen,
-      navigationOptions: {
+      navigationOptions: ({ navigation }) => ({
         title: 'Destinations',
         headerStyle: {
           backgroundColor: Colors.secondary,
         },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
-      },
+        headerRight: (
+          <View>
+            <TouchableOpacity onPress={() => navigation.navigate('ExampleScreen')}>
+              <View>
+                <FontAwesome name="navicon" size={18} color="black" />
+              </View>
+            </TouchableOpacity>
+          </View>
+        ),
+      }),
     },
     ExampleScreen: {
       screen: ExampleScreen,
