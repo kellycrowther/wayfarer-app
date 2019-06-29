@@ -7,6 +7,7 @@ import LoginScreen from '../Containers/Login/LoginScreen'
 import RegisterScreen from '../Containers/Register/RegisterScreen'
 import DestinationsMapScreen from '../Containers/DestinationsMap/DestinationsMapScreen'
 import WaypointDetailScreen from 'App/Containers/WaypointDetail/WaypointDetailScreen'
+import EventsScreen from 'App/Containers/EventsScreen/EventsScreen'
 import { View, TouchableOpacity } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import React from 'react'
@@ -32,7 +33,7 @@ const StackNavigator = createStackNavigator(
         },
         headerRight: (
           <View>
-            <TouchableOpacity onPress={() => navigation.navigate('ExampleScreen')}>
+            <TouchableOpacity onPress={() => navigation.navigate('EventsScreen')}>
               <View>
                 <FontAwesome name="navicon" size={18} color="black" />
               </View>
@@ -97,6 +98,19 @@ const StackNavigator = createStackNavigator(
       screen: WaypointDetailScreen,
       navigationOptions: {
         title: 'Waypoint',
+        headerStyle: {
+          backgroundColor: Colors.secondary,
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      },
+    },
+    EventsScreen: {
+      screen: EventsScreen,
+      navigationOptions: {
+        title: 'Events',
         headerStyle: {
           backgroundColor: Colors.secondary,
         },
