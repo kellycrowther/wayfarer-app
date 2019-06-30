@@ -32,7 +32,7 @@ class EventsScreen extends React.Component {
   render() {
     return (
       <View style={Style.container}>
-        <EventsList eventsPage={this.state.events} />
+        <EventsList navigation={this.props.navigation} eventsPage={this.state.events} />
       </View>
     )
   }

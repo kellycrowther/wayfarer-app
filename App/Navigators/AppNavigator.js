@@ -8,6 +8,7 @@ import RegisterScreen from '../Containers/Register/RegisterScreen'
 import DestinationsMapScreen from '../Containers/DestinationsMap/DestinationsMapScreen'
 import WaypointDetailScreen from 'App/Containers/WaypointDetail/WaypointDetailScreen'
 import EventsScreen from 'App/Containers/EventsScreen/EventsScreen'
+import EventDetailScreen from 'App/Containers/EventDetailScreen/EventDetailScreen'
 import { View, TouchableOpacity } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import React from 'react'
@@ -109,6 +110,19 @@ const StackNavigator = createStackNavigator(
     },
     EventsScreen: {
       screen: EventsScreen,
+      navigationOptions: {
+        title: 'Events',
+        headerStyle: {
+          backgroundColor: Colors.secondary,
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      },
+    },
+    EventDetailScreen: {
+      screen: EventDetailScreen,
       navigationOptions: {
         title: 'Events',
         headerStyle: {

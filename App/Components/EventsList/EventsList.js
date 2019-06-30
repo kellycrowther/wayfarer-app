@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { ScrollView, Text, View } from 'react-native'
 import Style from './EventsListStyle'
 import { Card, Button } from 'react-native-elements'
@@ -24,6 +25,7 @@ class EventsList extends React.PureComponent {
           icon={<FontAwesome name="calendar" style={Style.buttonIcon} />}
           style={Style.button}
           title="VIEW NOW"
+          onPress={() => this.props.navigation.navigate('EventDetailScreen')}
         />
       </Card>
     ))
@@ -42,6 +44,9 @@ class EventsList extends React.PureComponent {
 
 EventsList.propTypes = {
   eventsPage: EventsPageProps,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 }
 
 export default EventsList
