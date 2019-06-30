@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import Style from './EventsScreenStyle'
 import { connect } from 'react-redux'
+import EventsActions from 'App/Stores/Events/Actions'
+import EventsList from 'App/Components/EventsList/EventsList'
 
 class EventsScreen extends React.Component {
   constructor(props) {
@@ -16,23 +18,45 @@ class EventsScreen extends React.Component {
 
   componentDidMount() {
     console.info('EventsScreen->componentDidMount()')
+    this.props.getAllEvents()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.state.events !== nextProps.events) {
+      this.setState({
+        events: nextProps.events,
+      })
+    }
   }
 
   render() {
     return (
       <View style={Style.container}>
-        <Text>Hello, World Events Screen</Text>
+        <EventsList eventsPage={this.state.events} />
       </View>
     )
   }
 }
 
 EventsScreen.propTypes = {
+  events: PropTypes.any,
+  eventsIsLoading: PropTypes.bool,
+  eventsErrorMessage: PropTypes.string,
+  getAllEvents: PropTypes.func,
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
 }
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state) => ({
+  events: state.events,
+})
 
-export default connect(mapStateToProps)(EventsScreen)
+const mapDispatchToProps = (dispatch) => ({
+  getAllEvents: () => dispatch(EventsActions.getAllEvents()),
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EventsScreen)

@@ -1,9 +1,9 @@
 import { createActions } from 'reduxsauce'
 
 const { Types, Creators } = createActions({
-  getEvents: null,
-  fetchEventsSuccess: null,
-  fetchEventsFailure: null,
+  getAllEvents: null,
+  fetchAllEventsSuccess: ['events'],
+  fetchAllEventsFailure: null,
 })
 
 export const EventsTypes = Types

@@ -3,10 +3,12 @@ import { ExampleTypes } from 'App/Stores/Example/Actions'
 import { StartupTypes } from 'App/Stores/Startup/Actions'
 import { DestinationsMapTypes } from 'App/Stores/DestinationsMap/Actions'
 import { AuthTypes } from 'App/Stores/Auth/Actions'
+import { EventsTypes } from 'App/Stores/Events/Actions'
 import { fetchUser } from './ExampleSaga'
 import { startup } from './StartupSaga'
 import { getAllWaypoints } from './DestinationMapSaga'
 import { login, createUser } from './AuthSaga'
+import { getAllEvents } from './EventsSaga'
 
 export default function* root() {
   yield all([
@@ -20,5 +22,6 @@ export default function* root() {
     takeLatest(AuthTypes.LOGIN, login),
     takeLatest(AuthTypes.CREATE_USER, createUser),
     takeLatest(DestinationsMapTypes.GET_ALL_WAYPOINTS, getAllWaypoints),
+    takeLatest(EventsTypes.GET_ALL_EVENTS, getAllEvents),
   ])
 }
