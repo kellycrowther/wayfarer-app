@@ -1,4 +1,6 @@
 rootProject.name = 'Boilerplate'
+include ':@mapbox_react-native-mapbox-gl'
+project(':@mapbox_react-native-mapbox-gl').projectDir = new File(rootProject.projectDir, '../node_modules/@mapbox/react-native-mapbox-gl/android/rctmgl')
 include ':react-native-reanimated'
 project(':react-native-reanimated').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-reanimated/android')
 include ':react-native-vector-icons'

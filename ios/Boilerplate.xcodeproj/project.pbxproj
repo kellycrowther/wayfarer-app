@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -63,6 +62,7 @@
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
 		F585ECBD71EA49B1A931199E /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 085726B22047499A81EA35AC /* Foundation.ttf */; };
 		FDE8B7F3D16A48F4A47A00DC /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F859A604F244482899B0DAB /* AntDesign.ttf */; };
+		600802E5518A42AD9178B206 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D53C5BC29B3343C9859364E1 /* Fontisto.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -462,6 +462,7 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F01206773DDB4D95B9FA484F /* RNReanimated.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNReanimated.xcodeproj; path = "../node_modules/react-native-reanimated/ios/RNReanimated.xcodeproj"; sourceTree = "<group>"; };
 		F7F23BD26DE74CB59532A06F /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		D53C5BC29B3343C9859364E1 /* Fontisto.ttf */ = {isa = PBXFileReference; name = "Fontisto.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -774,6 +775,7 @@
 				94F995B1C72A45639690C777 /* Octicons.ttf */,
 				8E8FA4DD00EA49B6AFE1796F /* SimpleLineIcons.ttf */,
 				027E18F86A774AE0B816AAA2 /* Zocial.ttf */,
+				D53C5BC29B3343C9859364E1 /* Fontisto.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1353,6 +1355,7 @@
 				E7F040FBA8C443C49C7F1769 /* Octicons.ttf in Resources */,
 				E7423288744C420F94BD6B1A /* SimpleLineIcons.ttf in Resources */,
 				80EE60EC73D24E37AFCCD52C /* Zocial.ttf in Resources */,
+				600802E5518A42AD9178B206 /* Fontisto.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
