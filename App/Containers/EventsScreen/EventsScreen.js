@@ -5,6 +5,7 @@ import Style from './EventsScreenStyle'
 import { connect } from 'react-redux'
 import EventsActions from 'App/Stores/Events/Actions'
 import EventsList from 'App/Components/EventsList/EventsList'
+import { EventsPageProps } from '../../Models/EventsModels'
 
 class EventsScreen extends React.Component {
   constructor(props) {
@@ -32,14 +33,14 @@ class EventsScreen extends React.Component {
   render() {
     return (
       <View style={Style.container}>
-        <EventsList navigation={this.props.navigation} eventsPage={this.state.events} />
+        <EventsList navigation={this.props.navigation} events={this.state.events.events} />
       </View>
     )
   }
 }
 
 EventsScreen.propTypes = {
-  events: PropTypes.any,
+  events: EventsPageProps,
   eventsIsLoading: PropTypes.bool,
   eventsErrorMessage: PropTypes.string,
   getAllEvents: PropTypes.func,

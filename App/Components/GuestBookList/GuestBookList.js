@@ -2,7 +2,7 @@ import React from 'react'
 import { ScrollView, View, Text } from 'react-native'
 import Style from './GuestBookListStyle'
 import { Card, ListItem } from 'react-native-elements'
-import { GuestBooksProps } from 'App/Models/GuestBookModels'
+import { GuestBookEntryProps } from 'App/Models/GuestBookModels'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
@@ -25,7 +25,7 @@ class GuestBookList extends React.PureComponent {
   }
 
   renderEntries(props) {
-    const entries = props.entries
+    const entries = props
     const entriesList = entries.map((entry, x) => (
       <TouchableOpacity activeOpacity={0.66} key={x}>
         <Card>
@@ -52,7 +52,7 @@ class GuestBookList extends React.PureComponent {
 }
 
 GuestBookList.propTypes = {
-  guestBooks: GuestBooksProps,
+  guestBooks: GuestBookEntryProps,
 }
 
 export default GuestBookList

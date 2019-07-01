@@ -10,9 +10,8 @@ import { TabView } from 'react-native-tab-view'
 import WaypointDetail from 'App/Components/WaypointDetail/WaypointDetail'
 import EventsList from 'App/Components/EventsList/EventsList'
 import GuestBookList from 'App/Components/GuestBookList/GuestBookList'
-import { GuestBooksProps } from 'App/Models/GuestBookModels'
 import { WaypointProps } from 'App/Models/WaypointModels'
-import { EventsPageProps } from 'App/Models/EventsModels'
+import { selectorGetWaypoint } from 'App/Stores/WaypointDetail/Selectors'
 
 class WaypointDetailScreen extends React.Component {
   constructor(props) {
@@ -59,9 +58,14 @@ class WaypointDetailScreen extends React.Component {
               case 'about':
                 return <WaypointDetail waypointDetail={this.state.waypoint} />
               case 'events':
-                return <EventsList eventsPage={this.state.eventsPage} />
+                return (
+                  <EventsList
+                    navigation={this.props.navigation}
+                    events={this.state.waypoint.events}
+                  />
+                )
               case 'guestBook':
-                return <GuestBookList guestBooks={this.state.guestBooks} />
+                return <GuestBookList guestBooks={this.state.waypoint.guest_books} />
             }
           }}
           onIndexChange={(index) => this.setState({ index })}
@@ -74,17 +78,13 @@ class WaypointDetailScreen extends React.Component {
 
 WaypointDetailScreen.propTypes = {
   waypoint: WaypointProps,
-  guestBooks: GuestBooksProps,
-  eventsPage: EventsPageProps,
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
 }
 
-const mapStateToProps = (state) => ({
-  waypoint: state.waypoint,
-  guestBooks: state.guestBooks,
-  eventsPage: state.events,
+const mapStateToProps = (state, props) => ({
+  waypoint: selectorGetWaypoint(state, 5),
 })
 
 export default connect(mapStateToProps)(WaypointDetailScreen)

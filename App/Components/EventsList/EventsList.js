@@ -4,7 +4,7 @@ import { ScrollView, Text, View } from 'react-native'
 import Style from './EventsListStyle'
 import { Card, Button } from 'react-native-elements'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import { EventsPageProps } from 'App/Models/EventsModels'
+import { EventProps } from 'App/Models/EventsModels'
 
 class EventsList extends React.PureComponent {
   constructor(props) {
@@ -13,7 +13,7 @@ class EventsList extends React.PureComponent {
   }
 
   renderEvents(props) {
-    const events = props.events
+    const events = props
     const eventsList = events.map((event, x) => (
       <Card key={x} title={event.name} image={{ uri: event.photo }}>
         <View style={Style.dateTimeContainer}>
@@ -33,7 +33,7 @@ class EventsList extends React.PureComponent {
   }
 
   render() {
-    const entries = this.renderEvents(this.props.eventsPage)
+    const entries = this.renderEvents(this.props.events)
     return (
       <ScrollView contentContainerStyle={Style.scrollContainer} style={Style.container}>
         {entries}
@@ -43,7 +43,7 @@ class EventsList extends React.PureComponent {
 }
 
 EventsList.propTypes = {
-  eventsPage: EventsPageProps,
+  events: EventProps,
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,

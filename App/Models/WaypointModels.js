@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types'
+import { GuestBookEntryProps } from 'App/Models/GuestBookModels'
+import { EventProps } from 'App/Models/EventsModels'
 
 export let WaypointProps = PropTypes.shape({
   detailScreenIsLoading: PropTypes.bool,
@@ -16,13 +18,7 @@ export let WaypointProps = PropTypes.shape({
   state: PropTypes.string,
   zipCode: PropTypes.number,
   price: PropTypes.number,
-  events: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      description: PropTypes.string,
-      time: PropTypes.string,
-      photo: PropTypes.string,
-    })
-  ),
+  events: EventProps,
+  guest_books: GuestBookEntryProps,
   id: PropTypes.number,
 })
